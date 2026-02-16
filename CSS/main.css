@@ -3,7 +3,8 @@
 	font-style: normal;
 	font-weight: 100;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Thin.woff') format('woff'),   
-	url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff2/IRANYekanX-Thin.woff2') format('woff2');		
+	url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff2/IRANYekanX-Thin.woff2') format('woff2');
+	
 }
 
 @font-face {
@@ -73,8 +74,8 @@
 	font-family: IRANYekanX;
 	font-style: normal;
 	font-weight: bold;
-	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Bold.woff') format('woff'),   
-	url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff2/IRANYekanX-Bold.woff2') format('woff2');	 
+	src: url('https://rasol-ze.github.io/font/woff/IRANYekanX-Bold.woff') format('woff'),   
+	url('https://rasol-ze.github.io/font/woff2/IRANYekanX-Bold.woff2') format('woff2');	 
 }
 
 @font-face {
@@ -135,3 +136,4 @@
         margin-top: 110px;
 
     } */
+
