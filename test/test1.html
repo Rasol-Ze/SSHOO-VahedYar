@@ -1,0 +1,496 @@
+<html lang="fa" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSHOO-Vahedyar</title>
+
+  <style>
+    @font-face {
+      font-family: "Iran";
+      src: url(/font/YekanBakhFaNum-VF.woff2) format("woff2");
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: "Iran";
+
+    }
+
+    body {
+      background-color: black;
+    }
+
+    .add-lesson-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 383px;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 1);
+    }
+
+    .lessonInfo-back {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding: 10px 32px;
+      width: 100%;
+      height: 75px;
+      border-bottom: 2px solid rgba(226, 232, 240, 1);
+    }
+
+    .lessonInfo-back svg {
+      cursor: pointer;
+      fill: rgba(71, 85, 105, 1);
+      opacity: 0.5;
+    }
+
+    .lessonInfo-back svg:hover {
+      opacity: 1;
+
+    }
+
+    .lessonInfo-back p {
+      color: rgba(30, 41, 59, 1);
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .inputs-container {
+      display: flex;
+      flex-direction: column;
+      justify-self: center;
+      width: 326px;
+      height: 646px;
+      gap: 24px;
+    }
+
+    .name-unit {
+      display: flex;
+      gap: 10px
+    }
+
+    .lessonName-input {
+      width: 216px;
+
+    }
+
+    input {
+      height: 50px;
+      padding: 15px 10px;
+      border: none;
+      border-radius: 10px;
+      color: rgba(71, 85, 105, 1);
+      border: 2px solid rgba(226, 232, 240, 1);
+      font-size: 14px;
+
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    .unit-input {
+      width: 100px;
+    }
+
+    .inputs-label-div {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .inputs-label {
+      position: relative;
+      font-size: 16px;
+      font-weight: 500;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      width: fit-content;
+    }
+
+    .inputs-label-star {
+      position: absolute;
+      top: -7px;
+      left: -10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: rgba(185, 28, 28, 1);
+    }
+
+    .day-check-div {
+      display: flex;
+      gap: 12px;
+    }
+
+    .day-check-label {
+      display: flex;
+      color: rgba(71, 85, 105, 1);
+      font-size: 14px;
+      width: 44px;
+      height: 50px;
+      border-radius: 10px;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid rgba(226, 232, 240, 1);
+      cursor: pointer;
+    }
+
+    .time-evenOdd-div {
+      display: flex;
+      gap: 12px;
+    }
+
+    .time-select, .evenOdd-select {
+      width: 100%;
+      height: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(71, 85, 105, 1);
+      padding: 10px 15px;
+      border: 2px solid rgba(226, 232, 240, 1);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .time-select:focus {
+      outline: none;
+    }
+
+    .evenOdd-check-label {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 88px;
+      border: 2px solid rgba(226, 232, 240, 1);
+      border-radius: 10px;
+      color: rgba(71, 85, 105, 1);
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .check:checked+label {
+      background-color: rgba(226, 232, 240, 1);
+      border: 1px solid rgba(71, 85, 105, 1);
+    }
+
+    .add-lessonTime-button {
+      height: 50px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: rgba(71, 85, 105, 1);
+      border: 2px solid rgba(71, 85, 105, 1);
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    .add-lessonTime-button:hover {
+      background-color: rgba(226, 232, 240, 1);
+      border: none;
+    }
+
+    .time-tag-div {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .time-tag {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(71, 85, 105, 1);
+      gap: 5px;
+      padding: 6px 12px;
+      border: 1px solid rgba(71, 85, 105, 1);
+      border-radius: 6px;
+      cursor: default;
+    }
+
+    .time-tag svg:hover {
+      cursor: pointer;
+    }
+
+    .time-tag:hover {
+      background-color: rgba(226, 232, 240, 1);
+    }
+
+    .exam-time-date-div {
+      display: flex;
+      gap: 10px;
+    }
+
+    .exam-time-input {
+      flex: 1;
+      font-size: 16px;
+      font-weight: 600;
+      height: 50px;
+    }
+
+    .exam-date-input {
+      flex: 2;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .add-clear-buttons {
+      display: flex;
+      flex-direction: column;
+      /* padding: 24px 36px; */
+      gap: 24px;
+      justify-content: center;
+      margin-top: auto;
+      margin-bottom: 24px;
+    }
+
+    .add-clear-buttons div {
+      display: flex;
+      /* padding: 24px 36px; */
+      gap: 10px;
+      justify-content: center;
+      /* margin-top: auto; */
+      /* margin-bottom: 1rem; */
+    }
+
+    .clear-lesson-button {
+      display: flex;
+      gap: 10px;
+      /* width: 50%; */
+      font-size: 16px;
+      font-weight: 600;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(71, 85, 105, 1);
+      color: rgba(255, 255, 255, 1);
+      padding: 10px 15px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .add-lesson-button {
+      display: flex;
+      white-space: nowrap;
+      /* width: 50%; */
+      gap: 10px;
+      font-size: 16px;
+      font-weight: 600;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255, 255, 255, 1);
+      background-color: rgba(71, 85, 105, 1);
+      opacity: 0.5;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .add-lesson-button:hover {
+      background-color: rgba(37, 99, 235, 1);
+      opacity: 1;
+    }
+
+    
+  </style>
+
+</head>
+
+<body>
+  <div class="add-lesson-container">
+    <div class="lessonInfo-back">
+      <P>مشخصات درس</P>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+          d="M17.3638 12.5437L13.1075 16.7812C12.925 16.9637 12.685 17.055 12.4462 17.055C12.2063 17.055 11.965 16.9625 11.7825 16.7788C11.4162 16.4125 11.4175 15.8187 11.785 15.4537L14.4325 12.8175H7.04625C6.52875 12.8175 6.10875 12.3975 6.10875 11.88C6.10875 11.3625 6.52875 10.9425 7.04625 10.9425H14.4338L11.7838 8.3C11.4175 7.93375 11.4162 7.34 11.7825 6.97375C12.1475 6.6075 12.7413 6.60625 13.1088 6.97125L17.3638 11.2162C17.405 11.2562 17.425 11.3087 17.4575 11.355C17.495 11.4087 17.54 11.4563 17.5662 11.5163C17.6137 11.6313 17.64 11.7537 17.64 11.88C17.64 12.0062 17.6137 12.1287 17.5662 12.2425C17.5275 12.3337 17.4675 12.4113 17.4038 12.485C17.3875 12.5025 17.3813 12.5262 17.3638 12.5437ZM17.1462 0H6.6025C2.6525 0 0 2.77625 0 6.9075V16.8425C0 20.9738 2.6525 23.75 6.6025 23.75H17.145C21.095 23.75 23.75 20.9738 23.75 16.8425V6.9075C23.75 2.77625 21.0962 0 17.1462 0Z"
+          fill="" />
+      </svg>
+    </div>
+    <div class="inputs-container">
+      <div class="name-unit">
+        <div class="inputs-label-div">
+          <label class="inputs-label" for="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <g opacity="0.5">
+                <path
+                  d="M20.6838 17.1635V6.83545C20.6984 4.77956 19.0803 3.0827 17.0273 3C17.0273 3 8.56442 3 8.53426 3.00097C6.46183 3.04573 4.81848 4.76302 4.86421 6.83545V17.3426C4.91286 19.3819 6.58443 21.0078 8.62475 21L17.0137 20.999C19.0861 20.9533 20.7285 19.236 20.6838 17.1635Z"
+                  stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M10.1504 15.7996H16.3891M10.1504 11.9989H16.3891M10.1504 8.19922H13.1598" stroke="#475569"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3.31445 16.697H6.6391M3.31445 11.9984H6.6391M3.31445 7.30078H6.6391" stroke="#475569"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+            </svg>
+            نام درس
+            <span class="inputs-label-star">*</span></label>
+          <input class="lessonName-input" type="text">
+        </div>
+        <div class="inputs-label-div">
+          <label class="inputs-label" for="">واحد</label>
+          <input class="unit-input" type="number" max="4" min="0">
+        </div>
+      </div>
+      <div class="inputs-label-div">
+        <label class="inputs-label" for="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path
+                d="M11.9425 13.385C14.5341 13.385 16.635 11.2841 16.635 8.6925C16.635 6.1009 14.5341 4 11.9425 4C9.3509 4 7.25 6.1009 7.25 8.6925C7.25 11.2841 9.3509 13.385 11.9425 13.385Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M5.53573 20.0002C5.42507 19.3631 5.47078 18.7029 5.47078 18.0594C5.47078 15.6342 7.43674 13.6683 9.86187 13.6683H14.1377C16.5629 13.6683 18.5288 15.6342 18.5288 18.0594C18.5288 18.7029 18.5745 19.3631 18.4639 20.0002"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          نام استاد
+          <span class="inputs-label-star">*</span></label>
+        <input type="text">
+      </div>
+      <div class="inputs-label-div">
+        <label class="inputs-label" for="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path d="M3.70557 8.18091H20.2939" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M7.87646 5.68018H8.37646" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M15.623 5.68018H16.123" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M15.9053 3H8.10226C5.3953 3 3.70557 4.50741 3.70557 7.27813V16.6432C3.70557 19.4577 5.3953 21 8.10226 21H15.8973C18.6123 21 20.294 19.4846 20.294 16.7129V7.27813C20.302 4.50741 18.6202 3 15.9053 3Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M11.7207 16.9254L13.6886 11.5706H10.3114" stroke="#475569" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          جلسات درس
+          <span class="inputs-label-star">*</span>
+        </label>
+        <div class="time-tag-div">
+          <span class="time-tag">
+            دوشنبه‌ها-ف ۱۵:۰۰
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.20712 3.5001L6.85362 0.853625C7.04912 0.658125 7.04912 0.342125 6.85362 0.146625C6.65812 -0.048875 6.34212 -0.048875 6.14662 0.146625L3.50012 2.7931L0.853625 0.146625C0.658125 -0.048875 0.342125 -0.048875 0.146625 0.146625C-0.048875 0.342125 -0.048875 0.658125 0.146625 0.853625L2.79312 3.5001L0.146625 6.14665C-0.048875 6.3421 -0.048875 6.6581 0.146625 6.8536C0.244125 6.9511 0.372125 7.0001 0.500125 7.0001C0.628125 7.0001 0.756125 6.9511 0.853625 6.8536L3.50012 4.20715L6.14662 6.8536C6.24412 6.9511 6.37212 7.0001 6.50012 7.0001C6.62812 7.0001 6.75612 6.9511 6.85362 6.8536C7.04912 6.6581 7.04912 6.3421 6.85362 6.14665L4.20712 3.5001Z"
+                fill="#475569" />
+            </svg>
+          </span>
+          <span class="time-tag">
+            پنجشنبه‌ها ۱۲:۰۰
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.20712 3.5001L6.85362 0.853625C7.04912 0.658125 7.04912 0.342125 6.85362 0.146625C6.65812 -0.048875 6.34212 -0.048875 6.14662 0.146625L3.50012 2.7931L0.853625 0.146625C0.658125 -0.048875 0.342125 -0.048875 0.146625 0.146625C-0.048875 0.342125 -0.048875 0.658125 0.146625 0.853625L2.79312 3.5001L0.146625 6.14665C-0.048875 6.3421 -0.048875 6.6581 0.146625 6.8536C0.244125 6.9511 0.372125 7.0001 0.500125 7.0001C0.628125 7.0001 0.756125 6.9511 0.853625 6.8536L3.50012 4.20715L6.14662 6.8536C6.24412 6.9511 6.37212 7.0001 6.50012 7.0001C6.62812 7.0001 6.75612 6.9511 6.85362 6.8536C7.04912 6.6581 7.04912 6.3421 6.85362 6.14665L4.20712 3.5001Z"
+                fill="#475569" />
+            </svg>
+          </span>
+          <span class="time-tag">
+            شنبه‌ها ۸:۰۰
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.20712 3.5001L6.85362 0.853625C7.04912 0.658125 7.04912 0.342125 6.85362 0.146625C6.65812 -0.048875 6.34212 -0.048875 6.14662 0.146625L3.50012 2.7931L0.853625 0.146625C0.658125 -0.048875 0.342125 -0.048875 0.146625 0.146625C-0.048875 0.342125 -0.048875 0.658125 0.146625 0.853625L2.79312 3.5001L0.146625 6.14665C-0.048875 6.3421 -0.048875 6.6581 0.146625 6.8536C0.244125 6.9511 0.372125 7.0001 0.500125 7.0001C0.628125 7.0001 0.756125 6.9511 0.853625 6.8536L3.50012 4.20715L6.14662 6.8536C6.24412 6.9511 6.37212 7.0001 6.50012 7.0001C6.62812 7.0001 6.75612 6.9511 6.85362 6.8536C7.04912 6.6581 7.04912 6.3421 6.85362 6.14665L4.20712 3.5001Z"
+                fill="#475569" />
+            </svg>
+          </span>
+          <span class="time-tag">
+            سه‌شنبه‌ها-ز ۱۵:۰۰
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M4.20712 3.5001L6.85362 0.853625C7.04912 0.658125 7.04912 0.342125 6.85362 0.146625C6.65812 -0.048875 6.34212 -0.048875 6.14662 0.146625L3.50012 2.7931L0.853625 0.146625C0.658125 -0.048875 0.342125 -0.048875 0.146625 0.146625C-0.048875 0.342125 -0.048875 0.658125 0.146625 0.853625L2.79312 3.5001L0.146625 6.14665C-0.048875 6.3421 -0.048875 6.6581 0.146625 6.8536C0.244125 6.9511 0.372125 7.0001 0.500125 7.0001C0.628125 7.0001 0.756125 6.9511 0.853625 6.8536L3.50012 4.20715L6.14662 6.8536C6.24412 6.9511 6.37212 7.0001 6.50012 7.0001C6.62812 7.0001 6.75612 6.9511 6.85362 6.8536C7.04912 6.6581 7.04912 6.3421 6.85362 6.14665L4.20712 3.5001Z"
+                fill="#475569" />
+            </svg>
+          </span>
+        </div>
+
+        <div class="day-check-div">
+          <input class="check" type="radio" name="week" id="sat" hidden>
+          <label class="day-check-label" for="sat">ش</label>
+          <input class="check" type="radio" name="week" id="sun" hidden>
+          <label class="day-check-label" for="sun">ی</label>
+          <input class="check" type="radio" name="week" id="mon" hidden>
+          <label class="day-check-label" for="mon">د</label>
+          <input class="check" type="radio" name="week" id="tus" hidden>
+          <label class="day-check-label" for="tus">س</label>
+          <input class="check" type="radio" name="week" id="wen" hidden>
+          <label class="day-check-label" for="wen">چ</label>
+          <input class="check" type="radio" name="week" id="thu" hidden>
+          <label class="day-check-label" for="thu">پ</label>
+        </div>
+        <div class="time-evenOdd-div">
+          <select class="evenOdd-select" name="" id="">
+            <option value="">هر هفته</option>
+            <option value="">زوج</option>
+            <option value="">فرد</option>
+          </select>
+          <select class="time-select" name="" id="">
+            <option value="">۸:۰۰-۹:۳۰</option>
+            <option value="">۱۰:۰۰-۱۱:۳۰</option>
+            <option value="">۱۳:۳۰-۱۵:۰۰</option>
+            <option value="">۱۵:۳۰-۱۷:۰۰</option>
+          </select>
+        </div>
+        <svg xmlns="http://www.w3.org/2000/svg" width="324" height="2" viewBox="0 0 324 2" fill="none">
+          <line y1="1" x2="324" y2="1" stroke="#E2E8F0" stroke-width="2" />
+        </svg>
+        <button class="add-lessonTime-button">افزودن ساعت کلاس</button>
+      </div>
+      <div class="inputs-label-div">
+        <label class="inputs-label" for="">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M14.3233 6.28561H9.67659C8.92742 6.28561 8.32031 5.67849 8.32031 4.92933V4.35627C8.32031 3.60711 8.92742 3 9.67659 3H14.3233C15.0725 3 15.6796 3.60711 15.6796 4.35627V4.92933C15.6796 5.67849 15.0725 6.28561 14.3233 6.28561Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M15.6803 4.59375C17.7536 4.59375 19.4348 6.27498 19.4348 8.34831V17.2458C19.4348 19.3191 17.7536 21.0004 15.6803 21.0004H8.32097C6.24764 21.0004 4.56641 19.3191 4.56641 17.2458V8.34831C4.56641 6.27498 6.24764 4.59375 8.32097 4.59375"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M15.0166 14.9481H8.98242M11.9995 10.9414H8.98242" stroke="#475569" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          روز و ساعت امتحان
+        </label>
+        <div class="exam-time-date-div">
+          <input class="exam-time-input" type="time">
+          <input class="exam-date-input" type="date">
+        </div>
+      </div>
+    </div>
+    <div class="add-clear-buttons">
+      <svg xmlns="http://www.w3.org/2000/svg" width="382" height="3" viewBox="0 0 382 3" fill="none">
+        <rect width="382" height="3" fill="#475569" />
+      </svg>
+      <div>
+        <button class="clear-lesson-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M14.866 14.864C14.72 15.01 14.528 15.084 14.336 15.084C14.143 15.084 13.952 15.01 13.805 14.864L11.999 13.057L10.198 14.858C9.905 15.151 9.43 15.151 9.137 14.858C8.845 14.565 8.845 14.091 9.137 13.798L10.938 11.997L9.136 10.194C8.843 9.901 8.843 9.427 9.136 9.134C9.429 8.841 9.903 8.841 10.196 9.134L11.998 10.936L13.8 9.135C14.093 8.842 14.567 8.842 14.86 9.135C15.153 9.427 15.153 9.902 14.86 10.195L13.059 11.997L14.866 13.803C15.159 14.096 15.159 14.571 14.866 14.864ZM12 2.5C6.762 2.5 2.5 6.761 2.5 12C2.5 17.238 6.762 21.5 12 21.5C17.238 21.5 21.5 17.238 21.5 12C21.5 6.761 17.238 2.5 12 2.5Z"
+              fill="white" />
+          </svg>
+          <span>پاکسازی</span>
+        </button>
+        <button class="add-lesson-button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path
+              d="M16.66 2C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2H16.66ZM11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51Z"
+              fill="white" />
+          </svg>
+          <span>افزودن درس</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
