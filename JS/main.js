@@ -2,108 +2,266 @@ let courseList = JSON.parse(localStorage.getItem('courseList')) || [];
 
 
 document.querySelector('#openAddlessonSidebarBtn').addEventListener('click', function () {
-    const addLessonSidebar = document.querySelector('.add-lesson-container');
-    addLessonSidebar.style.transform = "translateX(0)";
-    addLessonSidebar.style.visibility = "visible";
+  const addLessonSidebar = document.querySelector('.add-lesson-container');
+  addLessonSidebar.style.transform = "translateX(0)";
+  addLessonSidebar.style.visibility = "visible";
 });
 
+
 document.querySelector('#closeAddLeassonSidebarBtn').addEventListener('click', function () {
-    const addLessonSidebar = document.querySelector('.add-lesson-container');
-    addLessonSidebar.style.transform = "translateX(390px)";
-    addLessonSidebar.style.visibility = "hidden";
+  const addLessonSidebar = document.querySelector('.add-lesson-container');
+  addLessonSidebar.style.transform = "translateX(390px)";
+  addLessonSidebar.style.visibility = "hidden";
 });
 
 const lessonNameInput = document.querySelectorAll('.fillInputColor input')
 lessonNameInput.forEach(input => {
-    input.addEventListener('input', function () {
-        if (input.value) {
-            input.style.backgroundColor = "var(--white3)"
+  input.addEventListener('input', function () {
+    checkFormValidity()
+    if (input.value) {
+      input.style.backgroundColor = "var(--white3)"
 
-        } else {
-            input.style.backgroundColor = ""
-        }
-    })
+    } else {
+      input.style.backgroundColor = ""
+    }
+  })
 })
 
+
 function addLesson(timeTagDiv, schedule) {
-    const lessonName = document.querySelector('#LessonNameInput').value
-    const unit = document.querySelector('#unitInput').value
-    const profossorName = document.querySelector('#profossorName').value
-    const daySelected = document.querySelector('input[name="week"]:checked').value || '';
-    const evenOdd = document.querySelector('#evenOdd').value
-    const classTime = document.querySelector('#classTime').value
-    const examTime = document.querySelector('#examTimeInput').value
-    const examDate = document.querySelector('#examDateInput').value
+  const lessonName = document.querySelector('#LessonNameInput').value
+  const unit = document.querySelector('#unitInput').value
+  const profossorName = document.querySelector('#profossorName').value
+  const daySelected = document.querySelector('input[name="week"]:checked').value || '';
+  const evenOdd = document.querySelector('#evenOdd').value
+  const classTime = document.querySelector('#classTime').value
+  const examTime = document.querySelector('#examTimeInput').value
+  const examDate = document.querySelector('#examDateInput').value
 
-    const newCourse = {
-        lessonID: crypto.randomUUID(),
-        lessonName: lessonName,
-        unit: unit,
-        profossorName: profossorName,
-        schedule: schedule,
-        exam:
-        {
-            time: examTime,
-            date: examDate
-        },
+  const newCourse = {
+    lessonID: crypto.randomUUID(),
+    lessonName: lessonName,
+    unit: unit,
+    profossorName: profossorName,
+    schedule: schedule,
+    exam:
+    {
+      time: examTime,
+      date: examDate
+    },
 
-        timeTagDiv: timeTagDiv,
-
-
-    };
+    timeTagDiv: timeTagDiv,
 
 
-    courseList.unshift(newCourse)
-    localStorage.setItem('courseList', JSON.stringify(courseList))
-    addToSidebar(newCourse)
-    addToTable(newCourse)
-    sumLesson()
-    sumUint(courseList)
-    resetInputs()
-    console.log(courseList)
+  };
 
+
+  courseList.unshift(newCourse)
+  localStorage.setItem('courseList', JSON.stringify(courseList))
+  fillSuccessModal(newCourse)
+  popUpModal()
+  addToSidebar(newCourse)
+  addToTable(newCourse)
+  sumLesson()
+  sumUint(courseList)
+  resetInputs()
+  console.log(courseList)
+
+}
+
+
+
+
+function checkFormValidity() {
+  const lessonNameInput = document.querySelector('#LessonNameInput')?.value.trim() || ''
+  const profossorName = document.querySelector('#profossorName')?.value.trim() || ''
+  const unit = document.querySelector('#unitInput')?.value || ''
+  const daySelect = document.querySelector('#timeTagDiv').innerHTML
+  const addlessonBtn = document.querySelector('.add-lesson-button')
+  const clearInputsBtn = document.querySelector('.clear-lesson-button')
+
+  if (lessonNameInput !== '' && profossorName !== '' && unit !== '' && daySelect !== '') {
+    addlessonBtn.classList.remove('disable-button')
+  } else {
+    addlessonBtn.classList.add('disable-button')
+  }
+
+  if (lessonNameInput !== '' || profossorName !== '' || unit !== '' || daySelect !== '') {
+    clearInputsBtn.classList.remove('disable-button')
+  } else {
+    clearInputsBtn.classList.add('disable-button')
+  }
+
+}
+
+function popUpModal() {
+  const modalBackground = document.querySelector('.modals-background')
+  const modalDiv = document.querySelector('.modal-div')
+  modalBackground.style.opacity = '1'
+  modalBackground.style.pointerEvents = 'all'
+  modalDiv.style.transform = 'scale(1)'
+  closePopUp()
+  modalAddNewLesson()
+
+}
+
+function fillSuccessModal(course) {
+  document.querySelector('.modal-div').innerHTML = `      <div class="success-modalTitle-div">
+        <h1 class="H1">درس شما ثبت شد!</h1>
+        <svg id='closeModal' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <g opacity="0.5">
+            <path d="M8 8L24 24" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M24 8L8 24" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+      </div>
+      <div class="modalDetail-div">
+        <div class="modal-lessonUnit">
+          <h2 class="H2">${course.lessonName}</h2>
+          <span class="BODY" style="color: var(--text2);">${course.unit} واحد</span>
+        </div>
+        <svg width="335" height="2" viewBox="0 0 335 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="335" y1="1" x2="-8.74228e-08" y2="0.999971" stroke="#E2E8F0" stroke-width="2" />
+        </svg>
+        <div class="modal-title-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path
+                d="M11.9425 13.385C14.5341 13.385 16.635 11.2841 16.635 8.6925C16.635 6.1009 14.5341 4 11.9425 4C9.3509 4 7.25 6.1009 7.25 8.6925C7.25 11.2841 9.3509 13.385 11.9425 13.385Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M5.53573 20.0002C5.42507 19.3631 5.47078 18.7029 5.47078 18.0594C5.47078 15.6342 7.43674 13.6683 9.86187 13.6683H14.1377C16.5629 13.6683 18.5288 15.6342 18.5288 18.0594C18.5288 18.7029 18.5745 19.3631 18.4639 20.0002"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          <span class="BODY">${course.profossorName}</span>
+        </div>
+        <div class="modal-title-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M14.3233 6.28561H9.67659C8.92742 6.28561 8.32031 5.67849 8.32031 4.92933V4.35627C8.32031 3.60711 8.92742 3 9.67659 3H14.3233C15.0725 3 15.6796 3.60711 15.6796 4.35627V4.92933C15.6796 5.67849 15.0725 6.28561 14.3233 6.28561Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path
+                d="M15.6803 4.59375C17.7536 4.59375 19.4348 6.27498 19.4348 8.34831V17.2458C19.4348 19.3191 17.7536 21.0004 15.6803 21.0004H8.32097C6.24764 21.0004 4.56641 19.3191 4.56641 17.2458V8.34831C4.56641 6.27498 6.24764 4.59375 8.32097 4.59375"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M15.0166 14.9481H8.98242M11.9995 10.9414H8.98242" stroke="#475569" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          <span class="BODY">امتحان: ${course.exam.date} - ساعت ${course.exam.time}</span>
+        </div>
+        <div class="modal-classDay-tag">
+          <div class="modal-title-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <g opacity="0.5">
+                <path d="M3.70557 8.18091H20.2939" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M7.87646 5.68018H8.37646" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path d="M15.623 5.68018H16.123" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M15.9053 3H8.10226C5.3953 3 3.70557 4.50741 3.70557 7.27813V16.6432C3.70557 19.4577 5.3953 21 8.10226 21H15.8973C18.6123 21 20.294 19.4846 20.294 16.7129V7.27813C20.302 4.50741 18.6202 3 15.9053 3Z"
+                  stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M11.7207 16.9254L13.6886 11.5706H10.3114" stroke="#475569" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </g>
+            </svg>
+            <span class="BODY">روزهای کلاس</span>
+          </div>
+          <div class="modal-time-tag-div" id="modalTimeTagDiv">
+          ${course.timeTagDiv}
+          </div>
+
+        </div>
+        <div class="modal-textareaFix">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path
+                d="M20.3917 9.27057C21.6527 8.06028 20.7182 6.73422 19.7838 5.76069C18.8494 4.78717 17.5629 3.79903 16.3018 5.00931L5.0908 16.184C4.70761 16.5518 4.48718 17.0574 4.47847 17.5884L4.43466 20.259C4.42868 20.6235 4.71772 20.9246 5.08216 20.9336L7.75228 20.9995C8.28324 21.0125 8.79744 20.813 9.18063 20.4453L20.3917 9.27057Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M18.2491 11.4133L14.0747 7.23889" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M6.15985 3V9.32618M9.32276 6.16315H2.99658" stroke="#475569" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          <textarea maxlength="100" name="" id="" class="BODY modal-noteInput"
+            placeholder="نوشتن یادداشت..."></textarea>
+        </div>
+      </div>
+      <div class="modal-buttons-div">
+        <button class="H3 modal-editLesson-button">
+          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M19.8584 19.8518H13.4814C13.0674 19.8518 12.7314 20.1878 12.7314 20.6018C12.7314 21.0158 13.0674 21.3518 13.4814 21.3518H19.8584C20.2724 21.3518 20.6084 21.0158 20.6084 20.6018C20.6084 20.1878 20.2724 19.8518 19.8584 19.8518Z"
+              fill="#475569" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M9.61666 8.84336C9.7161 8.7111 9.90386 8.68434 10.0363 8.78355L15.2163 12.664C15.349 12.7634 15.3759 12.9516 15.2763 13.0842L10.4566 19.504C9.29664 21.054 7.54664 21.364 6.33664 21.364C5.58664 21.364 5.04664 21.244 4.98664 21.234C4.85664 21.204 4.73664 21.114 4.66664 20.994C4.59664 20.864 2.87664 17.804 4.79664 15.254L9.61666 8.84336Z"
+              fill="#475569" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M17.2067 10.514L16.5367 11.4047C16.4373 11.5369 16.2495 11.5637 16.1171 11.4645L10.9363 7.58345C10.8039 7.48428 10.7768 7.29665 10.8757 7.16403L11.5467 6.26399C12.2367 5.33399 13.3067 4.84399 14.3867 4.84399C15.1267 4.84399 15.8667 5.07399 16.5067 5.55399C17.2567 6.12399 17.7467 6.95399 17.8867 7.88399C18.0167 8.82399 17.7767 9.75399 17.2067 10.514Z"
+              fill="#475569" />
+          </svg>
+
+          ویرایش درس
+        </button>
+        <button class="H3 modal-newLesson-button" id="modalOpenAddlessonSidebarBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--action)">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M16.2178 3H7.78313C4.84378 3 3 5.08119 3 8.02638V15.9736C3 18.9188 4.83503 21 7.78313 21H16.2169C19.1659 21 21 18.9188 21 15.9736V8.02638C21 5.08119 19.1659 3 16.2178 3Z"
+              stroke="var(--action)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12 8.69434V15.2872" stroke="var(--white)" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round"></path>
+            <path d="M15.2989 11.9924H8.69922" stroke="var(--white)" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          درس جدید
+        </button>
+      </div>`
 }
 
 function sumLesson() {
-    const lessonListLength = document.querySelector('.lessonList').children.length
-    document.querySelector('#sumLesson').textContent = `${lessonListLength} درس`
+  const lessonListLength = document.querySelector('.lessonList').children.length
+  document.querySelector('#sumLesson').textContent = `${lessonListLength} درس`
 }
 
 function sumUint(courseList) {
-    const totalUnit = courseList.reduce((sum, lesson) => sum + Number(lesson.unit), 0)
-    document.querySelectorAll('.sumUnit').forEach(span => { span.textContent = `${totalUnit} واحد` })
+  const totalUnit = courseList.reduce((sum, lesson) => sum + Number(lesson.unit), 0)
+  document.querySelectorAll('.sumUnit').forEach(span => { span.textContent = `${totalUnit} واحد` })
 }
 
 function findPlace(day, time) {
-    return document.querySelector(`#${day}`).children[time]
+  return document.querySelector(`#${day}`).children[time]
 
 }
 
 function resetInputs() {
-    document.querySelectorAll('.fillInputColor input').forEach(input => { input.value = '' })
-    document.querySelector('input[name="week"]:checked').checked = false
-    document.querySelector('#timeTagDiv').innerHTML = ''
-    document.querySelector('.time-select').selectedIndex = 0
-    document.querySelector('.evenOdd-select').selectedIndex = 0
-    const addLessonSidebar = document.querySelector('.add-lesson-container');
-    addLessonSidebar.style.transform = "translateX(390px)";
-    addLessonSidebar.style.visibility = "hidden";
-    const lessonNameInput = document.querySelectorAll('.fillInputColor input')
-    lessonNameInput.forEach(input => {
-        input.style.backgroundColor = "var(--white)"
+  document.querySelectorAll('.fillInputColor input').forEach(input => { input.value = '' })
+  document.querySelector('input[name="week"]:checked').checked = false
+  document.querySelector('#timeTagDiv').innerHTML = ''
+  document.querySelector('.time-select').selectedIndex = 0
+  document.querySelector('.evenOdd-select').selectedIndex = 0
+  const addLessonSidebar = document.querySelector('.add-lesson-container');
+  addLessonSidebar.style.transform = "translateX(390px)";
+  addLessonSidebar.style.visibility = "hidden";
+  const lessonNameInput = document.querySelectorAll('.fillInputColor input')
+  lessonNameInput.forEach(input => {
+    input.style.backgroundColor = "var(--white)"
 
-    }
-    )
+  }
+  )
 }
 
 
 function addToSidebar(course) {
-    const lessonSidebarList = document.querySelector('.lessonList')
-    if (lessonSidebarList.classList.contains('empty')) {
-        lessonSidebarList.innerHTML = ``
-        lessonSidebarList.classList.remove("empty")
-    }
-    lessonSidebarList.innerHTML += `          <div class="lessonDetails-drawer">
+  const lessonSidebarList = document.querySelector('.lessonList')
+  if (lessonSidebarList.classList.contains('empty')) {
+    lessonSidebarList.innerHTML = ``
+    lessonSidebarList.classList.remove("empty")
+  }
+  lessonSidebarList.innerHTML += `          <div class="lessonDetails-drawer">
             <div class="lessonDetails-eye">
               <div class="lessonName-arrow">
                 <input class="lessonDetails-arrow" type="checkbox" name="lesson-checkbox" id="lessonDetails-arrow${course.lessonID}"
@@ -224,9 +382,9 @@ function addToSidebar(course) {
 }
 
 function addToTable(course) {
-    course.schedule.forEach(element => {
-        const cell = findPlace(element.day, element.time)
-        cell.innerHTML = `          <td class="table-dataCell">
+  course.schedule.forEach(element => {
+    const cell = findPlace(element.day, element.time)
+    cell.innerHTML = `          <td class="table-dataCell">
                 <div class="table-dataCel-hoverDiv">
                   <button class="H3 viewButton-table">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -260,23 +418,23 @@ function addToTable(course) {
                     برگزاری</span>
                 </div>
               </td>`
-    });
+  });
 }
 
 function addLessonTimeTag(schedule) {
-    const daySelected = document.querySelector('input[name="week"]:checked').value || '';
-    const evenOdd = document.querySelector('#evenOdd').value
-    const classTime = document.querySelector('#classTime').value
-    const timeTagDiv = document.querySelector('#timeTagDiv')
-    const numToTime = { '1': '۸:۰۰', '2': '۱۰:۰۰', '3': '۱۳:۳۰', '4': '۱۵:۳۰' }
-    console.log(daySelected)
-    schedule.unshift({
-        day: daySelected,
-        time: classTime,
-        type: evenOdd
-    })
+  const daySelected = document.querySelector('input[name="week"]:checked').value || '';
+  const evenOdd = document.querySelector('#evenOdd').value
+  const classTime = document.querySelector('#classTime').value
+  const timeTagDiv = document.querySelector('#timeTagDiv')
+  const numToTime = { '1': '۸:۰۰', '2': '۱۰:۰۰', '3': '۱۳:۳۰', '4': '۱۵:۳۰' }
+  console.log(daySelected)
+  schedule.unshift({
+    day: daySelected,
+    time: classTime,
+    type: evenOdd
+  })
 
-    timeTagDiv.innerHTML += `
+  timeTagDiv.innerHTML += `
                       <span class="time-tag">
                     ${daySelected} - ${evenOdd} ${numToTime[`${classTime}`]}
                     <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
@@ -285,31 +443,64 @@ function addLessonTimeTag(schedule) {
                         fill="#475569" />
                     </svg>`
 
-    return timeTagDiv.innerHTML
+  return timeTagDiv.innerHTML
 
 }
+
+
 let tempSchedule = []
 let tempTimeTagDiv = ``
 document.querySelector('#addTimeTagBtn').addEventListener('click', function () {
-    tempTimeTagDiv = addLessonTimeTag(tempSchedule)
+  tempTimeTagDiv = addLessonTimeTag(tempSchedule)
+  checkFormValidity()
 })
 
 document.querySelector('.clear-lesson-button').addEventListener('click', function () {
+  if (!(document.querySelector('.clear-lesson-button').classList.contains('disable-button'))) {
     document.querySelectorAll('.fillInputColor input').forEach(input => { input.value = '' })
-    document.querySelector('input[name="week"]:checked').checked = false
     document.querySelector('#timeTagDiv').innerHTML = ''
     document.querySelector('.time-select').selectedIndex = 0
     document.querySelector('.evenOdd-select').selectedIndex = 0
+    tempSchedule = []
+    tempTimeTagDiv = ``
     const lessonNameInput = document.querySelectorAll('.fillInputColor input')
     lessonNameInput.forEach(input => {
-        input.style.backgroundColor = "var(--white)"
-
+      input.style.backgroundColor = "var(--white)"
     }
     )
+    document.querySelector('.clear-lesson-button').classList.add('disable-button')
+    document.querySelector('input[name="week"]:checked').checked = false
+  }
 })
 
 document.querySelector('.add-lesson-button').addEventListener('click', function () {
+  if (!(document.querySelector('.add-lesson-button').classList.contains('disable-button'))) {
     addLesson(tempTimeTagDiv, tempSchedule)
     tempSchedule = []
     tempTimeTagDiv = ``
+    document.querySelector('.add-lesson-button').classList.add('disable-button')
+
+  }
 })
+
+function modalAddNewLesson() {
+  document.querySelector('#modalOpenAddlessonSidebarBtn').addEventListener('click', function () {
+    const addLessonSidebar = document.querySelector('.add-lesson-container');
+    addLessonSidebar.style.transform = "translateX(0)";
+    addLessonSidebar.style.visibility = "visible";
+    const modalDiv = document.querySelector('.modal-div')
+    const modalBackground = document.querySelector('.modals-background')
+    modalBackground.style.opacity = '0'
+    modalBackground.style.pointerEvents = 'none'
+    modalDiv.style.transform = 'scale(0.01)'
+  });
+}
+function closePopUp() {
+  document.querySelector('#closeModal').addEventListener('click', function () {
+    const modalDiv = document.querySelector('.modal-div')
+    const modalBackground = document.querySelector('.modals-background')
+    modalBackground.style.opacity = '0'
+    modalBackground.style.pointerEvents = 'none'
+    modalDiv.style.transform = 'scale(0.01)'
+  })
+}
