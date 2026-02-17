@@ -8,12 +8,16 @@
   <link rel="stylesheet" href="https://rasol-ze.github.io/SSHOO-VahedYar/CSS/sidebar.css">
   <link rel="stylesheet" href="https://rasol-ze.github.io/SSHOO-VahedYar/CSS/main.css">
   <link rel="stylesheet" href="https://rasol-ze.github.io/SSHOO-VahedYar/CSS/table.css">
-  
+  <link rel="stylesheet" href="https://rasol-ze.github.io/SSHOO-VahedYar/CSS/modals.css">
 
   <title>SSHOO-Vahedyar</title>
 </head>
 
 <body>
+  <div class="modals-background">
+    <div class="modal-div">
+    </div>
+  </div>
   <header>
     <div class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58" fill="none">
@@ -181,7 +185,7 @@
     <div class="sidebars">
       <div class="mainSidebar">
         <div class="lessonListTitle-unit">
-          <h3 class="H1">
+          <h3 style="color: var(--text1);" class="H1">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
               <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M3.87436 7.00366L15.8744 7.00366C16.4274 7.00366 16.8744 6.55666 16.8744 6.00366C16.8744 5.45066 16.4274 5.00366 15.8744 5.00366L3.87436 5.00366C3.32136 5.00366 2.87436 5.45066 2.87436 6.00366C2.87436 6.55666 3.32136 7.00366 3.87436 7.00366Z"
@@ -204,31 +208,33 @@
             </svg>
             لیست دروس
           </h3>
-          <span class="BODY sumUnit">۱۲ واحد</span>
+          <span class="BODY sumUnit">۰ واحد</span>
         </div>
         <div class="lessonList empty">
-          <div style="
+          <div class="BODY" style="
+            text-align: center;
+            color: var(--text2);
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;">هنوز درسی اضافه نکردید</div>
+            height: 100%;">درسی وجود ندارد.<br>از دکمه پایین درس خود را اضافه کنید.</div>
         </div>
         <div class="lessonUnit-addLessonButton-div">
           <div class="lesson-unit-number">
-            <span class="H2 sumUnit">۱۲ واحد</span>
+            <span class="H2 sumUnit">۰ واحد</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="2" height="26" viewBox="0 0 2 26" fill="none">
               <line x1="1" y1="4.37114e-08" x2="0.999999" y2="26" stroke="#E2E8F0" stroke-width="2" />
             </svg>
-            <span id="sumLesson" class="H2">۳ درس</span>
+            <span id="sumLesson" class="H2">۰ درس</span>
           </div>
           <button class="H3 mainAddLesson-button" id="openAddlessonSidebarBtn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="var(--action)">
               <path fill-rule="evenodd" clip-rule="evenodd"
                 d="M16.2178 3H7.78313C4.84378 3 3 5.08119 3 8.02638V15.9736C3 18.9188 4.83503 21 7.78313 21H16.2169C19.1659 21 21 18.9188 21 15.9736V8.02638C21 5.08119 19.1659 3 16.2178 3Z"
                 stroke="var(--action)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M12 8.69434V15.2872" stroke="var(--action)" stroke-width="1.5" stroke-linecap="round"
+              <path d="M12 8.69434V15.2872" stroke="var(--white)" stroke-width="1.5" stroke-linecap="round"
                 stroke-linejoin="round" />
-              <path d="M15.2989 11.9924H8.69922" stroke="var(--action)" stroke-width="1.5" stroke-linecap="round"
+              <path d="M15.2989 11.9924H8.69922" stroke="var(--white)" stroke-width="1.5" stroke-linecap="round"
                 stroke-linejoin="round" />
             </svg>
             افزودن درس
@@ -305,8 +311,7 @@
               جلسات درس
               <span class="inputs-label-star">*</span>
             </label>
-            <div class="time-tag-div" id="timeTagDiv">
-            </div>
+            <div class="time-tag-div" id="timeTagDiv"></div>
 
             <div class="day-check-div">
               <input class="check" type="radio" name="week" value="ش" id="sat" hidden>
@@ -365,19 +370,19 @@
             <rect width="382" height="3" fill="#475569" />
           </svg>
           <div>
-            <button class="clear-lesson-button">
+            <button class="disable-button clear-lesson-button" id="sidebarClearInputsBtn">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                   d="M14.866 14.864C14.72 15.01 14.528 15.084 14.336 15.084C14.143 15.084 13.952 15.01 13.805 14.864L11.999 13.057L10.198 14.858C9.905 15.151 9.43 15.151 9.137 14.858C8.845 14.565 8.845 14.091 9.137 13.798L10.938 11.997L9.136 10.194C8.843 9.901 8.843 9.427 9.136 9.134C9.429 8.841 9.903 8.841 10.196 9.134L11.998 10.936L13.8 9.135C14.093 8.842 14.567 8.842 14.86 9.135C15.153 9.427 15.153 9.902 14.86 10.195L13.059 11.997L14.866 13.803C15.159 14.096 15.159 14.571 14.866 14.864ZM12 2.5C6.762 2.5 2.5 6.761 2.5 12C2.5 17.238 6.762 21.5 12 21.5C17.238 21.5 21.5 17.238 21.5 12C21.5 6.761 17.238 2.5 12 2.5Z"
-                  fill="white" />
+                  fill="var(--text2)" />
               </svg>
               <span>پاکسازی</span>
             </button>
-            <button class="add-lesson-button">
+            <button class="disable-button add-lesson-button">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M16.66 2C20.06 2 22 3.92 22 7.33V16.67C22 20.06 20.07 22 16.67 22H7.33C3.92 22 2 20.06 2 16.67V7.33C2 3.92 3.92 2 7.33 2H16.66ZM11.99 7.51C11.53 7.51 11.16 7.88 11.16 8.34V11.16H8.33C8.11 11.16 7.9 11.25 7.74 11.4C7.59 11.56 7.5 11.769 7.5 11.99C7.5 12.45 7.87 12.82 8.33 12.83H11.16V15.66C11.16 16.12 11.53 16.49 11.99 16.49C12.45 16.49 12.82 16.12 12.82 15.66V12.83H15.66C16.12 12.82 16.49 12.45 16.49 11.99C16.49 11.53 16.12 11.16 15.66 11.16H12.82V8.34C12.82 7.88 12.45 7.51 11.99 7.51Z"
-                  fill="white" />
+                  fill="var(--action)" />
               </svg>
               <span>افزودن درس</span>
             </button>
@@ -1106,7 +1111,4 @@
 
 </body>
 
-
 </html>
-
-
