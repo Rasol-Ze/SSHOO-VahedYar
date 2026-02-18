@@ -131,11 +131,35 @@
         font-weight: 500;
     }
 
+
+.disable-button {
+	color: var(--disable);
+	border: 2px solid var(--white3);
+	stroke: var(--disable);
+	cursor: not-allowed;
+}
+
+
+.disable-button svg path {
+	fill: var(--white);
+	stroke: var(--disable);
+	background-color: var(--disable);
+}
+
+.disable-button:hover {
+	background-color: var(--white);
+	color: var(--disable);
+	border: 2px solid var(--white3);
+	stroke: var(--disable);
+	cursor: not-allowed;
+}
+
     /* body {
 		display: flex;
         margin-top: 110px;
 
     } */
+
 
 
 
