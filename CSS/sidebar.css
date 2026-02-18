@@ -256,10 +256,11 @@
 }
 
 .mainAddLesson-button:hover,
-.mainAddLesson-button:hover svg path {
+.mainAddLesson-button:hover svg path, .mainAddLesson-button:hover svg {
     background-color: var(--action);
     color: var(--white);
-    stroke: var(--white);
+    stroke: var(--action);
+    fill: var(--white);
 }
 
 .time-tag-div {
@@ -428,6 +429,8 @@ input:focus {
 .day-check-div {
     display: flex;
     gap: 12px;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .day-check-label {
@@ -551,7 +554,6 @@ input:focus {
 .add-clear-buttons {
     display: flex;
     flex-direction: column;
-    /* padding: 0 36px; */
     gap: 24px;
     justify-content: center;
     margin-top: auto;
@@ -575,12 +577,21 @@ input:focus {
     font-weight: 600;
     align-items: center;
     justify-content: center;
-    background-color: var(--text2);
-    color: var(--white);
+    background-color: var(--white);
+    border: 2px solid var(--text2);
+    color: var(--text2);
     padding: 10px 15px;
     border-radius: 10px;
-    border: none;
     cursor: pointer;
+}
+
+.clear-lesson-button:hover {
+    color: var(--white);
+    background-color: var(--text2);
+}
+
+.clear-lesson-button:hover svg path {
+    fill: var(--white);
 }
 
 .add-lesson-button {
@@ -592,16 +603,16 @@ input:focus {
     font-weight: 600;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    background-color: var(--text2);
-    opacity: 0.5;
-    border: none;
+    color: var(--action);
+    background-color: var(--white);
+    border: 2px solid var(--action);
     padding: 10px 15px;
     border-radius: 10px;
     cursor: pointer;
 }
 
-.add-lesson-button:hover {
+.add-lesson-button:hover, .add-lesson-button:hover svg path {
     background-color: var(--action);
-    opacity: 1;
+    color: var(--white);
+    fill: var(--white);
 }
