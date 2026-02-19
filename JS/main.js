@@ -1,4 +1,43 @@
 let courseList = JSON.parse(localStorage.getItem('courseList')) || [];
+updateCourses(courseList)
+console.log(courseList)
+
+
+
+function updateCourses(courseList) {
+  document.querySelectorAll('td').forEach(td => { td.innerHTML = `` })
+  const lessonList = document.querySelector('.lessonList')
+  if (lessonList.children.length < 1) {
+    lessonList.classList.add('empty')
+  }
+  if (lessonList.classList.contains('empty')) {
+    lessonList.innerHTML = `          <div class="BODY" style="
+            text-align: center;
+            color: var(--text2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;">درسی وجود ندارد.<br>از دکمه پایین درس خود را اضافه کنید.</div>`
+  } else lessonList.innerHTML = ``
+  courseList.forEach(course => {
+    addToTable(course)
+    addToSidebar(course)
+  })
+  sumUint(courseList)
+  sumLesson(courseList)
+  localStorage.setItem('courseList', JSON.stringify(courseList))
+}
+
+
+
+
+document.querySelector('#resetAll').addEventListener('click', function () {
+  localStorage.removeItem('courseList')
+  courseList = []
+  document.querySelector('.lessonList').classList.add('empty')
+  updateCourses(courseList)
+})
+
 
 
 document.querySelector('#openAddlessonSidebarBtn').addEventListener('click', function () {
@@ -13,6 +52,9 @@ document.querySelector('#closeAddLeassonSidebarBtn').addEventListener('click', f
   addLessonSidebar.style.transform = "translateX(390px)";
   addLessonSidebar.style.visibility = "hidden";
 });
+
+
+
 
 const lessonNameInput = document.querySelectorAll('.fillInputColor input')
 lessonNameInput.forEach(input => {
@@ -56,17 +98,34 @@ function addLesson(timeTagDiv, schedule) {
   };
 
 
+
   courseList.unshift(newCourse)
   localStorage.setItem('courseList', JSON.stringify(courseList))
   fillSuccessModal(newCourse)
   popUpModal()
-  addToSidebar(newCourse)
-  addToTable(newCourse)
-  sumLesson()
-  sumUint(courseList)
+  updateCourses(courseList)
   resetInputs()
   console.log(courseList)
 
+}
+
+
+function removelesson(id) {
+  courseList = courseList.filter(lesson => lesson.lessonID !== id)
+  updateCourses(courseList)
+}
+
+
+function removeclass(day, time, id) {
+  const lessonIndex = courseList.findIndex(i => i.lessonID === id)
+  courseList[lessonIndex].schedule = courseList[lessonIndex].schedule.filter(schedule => schedule.time !== time || schedule.day !== day)
+  if (courseList[lessonIndex].schedule.length < 1) {
+    removelesson(id)
+  }
+
+  courseList[lessonIndex].timeTagDiv = courseList[lessonIndex].timeTagDiv.filter(tag => tag.id !== `${time}${day}`)
+  updateCourses(courseList)
+  console.log(courseList[lessonIndex])
 }
 
 
@@ -106,6 +165,7 @@ function popUpModal() {
 }
 
 function fillSuccessModal(course) {
+  const String = tagString(course)
   document.querySelector('.modal-div').innerHTML = `      <div class="success-modalTitle-div">
         <h1 class="H1">درس شما ثبت شد!</h1>
         <svg id='closeModal' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
@@ -171,7 +231,7 @@ function fillSuccessModal(course) {
             <span class="BODY">روزهای کلاس</span>
           </div>
           <div class="modal-time-tag-div" id="modalTimeTagDiv">
-          ${course.timeTagDiv}
+          ${String}
           </div>
 
         </div>
@@ -222,9 +282,8 @@ function fillSuccessModal(course) {
       </div>`
 }
 
-function sumLesson() {
-  const lessonListLength = document.querySelector('.lessonList').children.length
-  document.querySelector('#sumLesson').textContent = `${lessonListLength} درس`
+function sumLesson(courseList) {
+  document.querySelector('#sumLesson').textContent = `${courseList.length} درس`
 }
 
 function sumUint(courseList) {
@@ -257,11 +316,13 @@ function resetInputs() {
 
 function addToSidebar(course) {
   const lessonSidebarList = document.querySelector('.lessonList')
+  const String = tagString(course)
+
   if (lessonSidebarList.classList.contains('empty')) {
     lessonSidebarList.innerHTML = ``
     lessonSidebarList.classList.remove("empty")
   }
-  lessonSidebarList.innerHTML += `          <div class="lessonDetails-drawer">
+  lessonSidebarList.innerHTML += `          <div class="lessonDetails-drawer" data-id="${course.lessonID}">
             <div class="lessonDetails-eye">
               <div class="lessonName-arrow">
                 <input class="lessonDetails-arrow" type="checkbox" name="lesson-checkbox" id="lessonDetails-arrow${course.lessonID}"
@@ -331,7 +392,7 @@ function addToSidebar(course) {
                   <span class="BODY">روزهای کلاس</span>
                 </div>
                 <div class="time-tag-div" id="mainTimeTagDiv">
-                ${course.timeTagDiv}
+                ${String}
                 </div>
 
               </div>
@@ -350,7 +411,7 @@ function addToSidebar(course) {
                 <textarea maxlength="100" name="" id="" class="BODY noteInput" placeholder="نوشتن یادداشت..."></textarea>
               </div>
               <div class="add-delete-div">
-                <button class="H3 deleteLesson-button">
+                <button class="H3 deleteLesson-button" id="${course.lessonID}">
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M18.9166 9.54688L18.3047 17.9235C18.1782 19.6562 16.7354 20.9988 14.9968 20.9988H9.00378C7.26619 20.9988 5.82241 19.6562 5.69594 17.9225L5.08398 9.54688"
@@ -365,16 +426,21 @@ function addToSidebar(course) {
                   </svg>
                   حذف درس
                 </button>
-                <button class="H3 editLesson-button">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                      d="M6.14425 19.9399C5.40992 19.9736 4.75077 19.4898 4.56381 18.7786C4.07716 16.9264 4.45299 14.9528 5.58724 13.41L11.5023 5.36036C12.5932 3.8763 14.6815 3.55732 16.1656 4.64724C17.6496 5.73909 17.9686 7.82642 16.8777 9.31049L10.9626 17.3601C9.8284 18.903 8.05715 19.8512 6.14425 19.9399Z"
-                      stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    <path d="M13.459 20H19.6448" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
-                      stroke-linejoin="round" />
-                  </svg>
-                  ویرایش درس
-                </button>
+        <button class="H3 modal-editLesson-button">
+          <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M19.8584 19.8518H13.4814C13.0674 19.8518 12.7314 20.1878 12.7314 20.6018C12.7314 21.0158 13.0674 21.3518 13.4814 21.3518H19.8584C20.2724 21.3518 20.6084 21.0158 20.6084 20.6018C20.6084 20.1878 20.2724 19.8518 19.8584 19.8518Z"
+              fill="#475569" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M9.61666 8.84336C9.7161 8.7111 9.90386 8.68434 10.0363 8.78355L15.2163 12.664C15.349 12.7634 15.3759 12.9516 15.2763 13.0842L10.4566 19.504C9.29664 21.054 7.54664 21.364 6.33664 21.364C5.58664 21.364 5.04664 21.244 4.98664 21.234C4.85664 21.204 4.73664 21.114 4.66664 20.994C4.59664 20.864 2.87664 17.804 4.79664 15.254L9.61666 8.84336Z"
+              fill="#475569" />
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M17.2067 10.514L16.5367 11.4047C16.4373 11.5369 16.2495 11.5637 16.1171 11.4645L10.9363 7.58345C10.8039 7.48428 10.7768 7.29665 10.8757 7.16403L11.5467 6.26399C12.2367 5.33399 13.3067 4.84399 14.3867 4.84399C15.1267 4.84399 15.8667 5.07399 16.5067 5.55399C17.2567 6.12399 17.7467 6.95399 17.8867 7.88399C18.0167 8.82399 17.7767 9.75399 17.2067 10.514Z"
+              fill="#475569" />
+          </svg>
+
+          ویرایش درس
+        </button>
               </div>
             </div>
           </div>
@@ -397,7 +463,7 @@ function addToTable(course) {
                     </svg>
                     مشاهده
                   </button>
-                  <button class="H3 deleteButton-table">
+                  <button class="H3 deleteButton-table" id="${element.day}-${element.time}" data-id="${course.lessonID}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <path
                         d="M18.9166 9.54688L18.3047 17.9235C18.1782 19.6562 16.7354 20.9988 14.9968 20.9988H9.00378C7.26619 20.9988 5.82241 19.6562 5.69594 17.9225L5.08398 9.54688"
@@ -421,18 +487,31 @@ function addToTable(course) {
   });
 }
 
-function addLessonTimeTag(schedule) {
+
+function tagString(course) {
+  let tagString = ``
+  course.timeTagDiv.forEach(string => {
+    tagString += string.string
+  })
+
+  return tagString
+
+}
+
+function addLessonSchedule(schedule, tempTimeTagDiv) {
   const daySelected = document.querySelector('input[name="week"]:checked').value || '';
   const evenOdd = document.querySelector('#evenOdd').value
   const classTime = document.querySelector('#classTime').value
   const timeTagDiv = document.querySelector('#timeTagDiv')
   const numToTime = { '1': '۸:۰۰', '2': '۱۰:۰۰', '3': '۱۳:۳۰', '4': '۱۵:۳۰' }
-  console.log(daySelected)
+
   schedule.unshift({
     day: daySelected,
     time: classTime,
     type: evenOdd
   })
+
+
 
   timeTagDiv.innerHTML += `
                       <span class="time-tag">
@@ -441,19 +520,31 @@ function addLessonTimeTag(schedule) {
                       <path fill-rule="evenodd" clip-rule="evenodd"
                         d="M4.20712 3.5001L6.85362 0.853625C7.04912 0.658125 7.04912 0.342125 6.85362 0.146625C6.65812 -0.048875 6.34212 -0.048875 6.14662 0.146625L3.50012 2.7931L0.853625 0.146625C0.658125 -0.048875 0.342125 -0.048875 0.146625 0.146625C-0.048875 0.342125 -0.048875 0.658125 0.146625 0.853625L2.79312 3.5001L0.146625 6.14665C-0.048875 6.3421 -0.048875 6.6581 0.146625 6.8536C0.244125 6.9511 0.372125 7.0001 0.500125 7.0001C0.628125 7.0001 0.756125 6.9511 0.853625 6.8536L3.50012 4.20715L6.14662 6.8536C6.24412 6.9511 6.37212 7.0001 6.50012 7.0001C6.62812 7.0001 6.75612 6.9511 6.85362 6.8536C7.04912 6.6581 7.04912 6.3421 6.85362 6.14665L4.20712 3.5001Z"
                         fill="#475569" />
-                    </svg>`
+                    </svg>
+                    </span>`
 
-  return timeTagDiv.innerHTML
+  tempTimeTagDiv.unshift({
+    id: `${classTime}${daySelected}`,
+    string: `<span class="time-tag">
+                    ${daySelected} - ${evenOdd} ${numToTime[`${classTime}`]}
+                    <svg id="${classTime}-${daySelected}" class="removeTime" xmlns="http://www.w3.org/2000/svg" width="7" height="7" viewBox="0 0 7 7" fill="none">
+                      <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M4.20712 3.5001L6.85362 0.853625C7.04912 0.658125 7.04912 0.342125 6.85362 0.146625C6.65812 -0.048875 6.34212 -0.048875 6.14662 0.146625L3.50012 2.7931L0.853625 0.146625C0.658125 -0.048875 0.342125 -0.048875 0.146625 0.146625C-0.048875 0.342125 -0.048875 0.658125 0.146625 0.853625L2.79312 3.5001L0.146625 6.14665C-0.048875 6.3421 -0.048875 6.6581 0.146625 6.8536C0.244125 6.9511 0.372125 7.0001 0.500125 7.0001C0.628125 7.0001 0.756125 6.9511 0.853625 6.8536L3.50012 4.20715L6.14662 6.8536C6.24412 6.9511 6.37212 7.0001 6.50012 7.0001C6.62812 7.0001 6.75612 6.9511 6.85362 6.8536C7.04912 6.6581 7.04912 6.3421 6.85362 6.14665L4.20712 3.5001Z"
+                        fill="#475569" />
+                    </svg>
+                    </span>`
+  })
 
 }
 
 
 let tempSchedule = []
-let tempTimeTagDiv = ``
+let tempTimeTagDiv = []
 document.querySelector('#addTimeTagBtn').addEventListener('click', function () {
-  tempTimeTagDiv = addLessonTimeTag(tempSchedule)
+  addLessonSchedule(tempSchedule, tempTimeTagDiv)
   checkFormValidity()
 })
+// console.log(courseList[0].timeTagDiv.join(''))
 
 document.querySelector('.clear-lesson-button').addEventListener('click', function () {
   if (!(document.querySelector('.clear-lesson-button').classList.contains('disable-button'))) {
@@ -462,7 +553,7 @@ document.querySelector('.clear-lesson-button').addEventListener('click', functio
     document.querySelector('.time-select').selectedIndex = 0
     document.querySelector('.evenOdd-select').selectedIndex = 0
     tempSchedule = []
-    tempTimeTagDiv = ``
+    tempTimeTagDiv = []
     const lessonNameInput = document.querySelectorAll('.fillInputColor input')
     lessonNameInput.forEach(input => {
       input.style.backgroundColor = "var(--white)"
@@ -477,7 +568,7 @@ document.querySelector('.add-lesson-button').addEventListener('click', function 
   if (!(document.querySelector('.add-lesson-button').classList.contains('disable-button'))) {
     addLesson(tempTimeTagDiv, tempSchedule)
     tempSchedule = []
-    tempTimeTagDiv = ``
+    tempTimeTagDiv = []
     document.querySelector('.add-lesson-button').classList.add('disable-button')
 
   }
@@ -504,3 +595,26 @@ function closePopUp() {
     modalDiv.style.transform = 'scale(0.01)'
   })
 }
+
+document.querySelector('.lessonList').addEventListener('click', function (event) {
+  if (event.target.classList.contains('deleteLesson-button')) {
+    const ID = event.target.id
+    removelesson(ID)
+  }
+  if (event.target.classList.contains('removeTime')) {
+    const [time, day] = event.target.id.split('-')
+    const x =`#${day}-${time}`
+    const ID = document.querySelector(x).dataset.id
+    removeclass(day, time, ID)
+  }
+
+})
+
+
+document.querySelector('tbody').addEventListener('click', function (event) {
+  if (event.target.classList.contains('deleteButton-table')) {
+    const [day, time] = event.target.id.split('-')
+    const ID = event.target.dataset.id
+    removeclass(day, time, ID)
+  }
+})
