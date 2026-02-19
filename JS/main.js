@@ -1,3 +1,4 @@
+localStorage.removeItem('courseList')
 let courseList = JSON.parse(localStorage.getItem('courseList')) || [];
 updateCourses(courseList)
 console.log(courseList)
@@ -618,3 +619,4 @@ document.querySelector('tbody').addEventListener('click', function (event) {
     removeclass(day, time, ID)
   }
 })
+
