@@ -13,6 +13,7 @@
   align-items: center;
   border: 2px solid var(--white3);
   margin-bottom: 12px;
+  overflow: hidden;
 }
 
 .table-head-row {
@@ -60,9 +61,10 @@
   gap: 12px;
   padding: 18px;
   width: 188px;
-  height: -webkit-fill-available;
+  height: 107px;
   color: var(--text2);
   border-right: 2px solid var(--white3);
+
 }
 
 .table-dataCell:hover .table-dataCel-hoverDiv {
