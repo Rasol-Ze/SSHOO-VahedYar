@@ -268,9 +268,9 @@
                 </svg>
                 نام درس
                 <span class="inputs-label-star">*</span></label>
-              <input id="LessonNameInput" class="lessonName-input" type="text" maxlength="20">
+              <input id="LessonNameInput" class="lessonName-input" type="text" maxlength="">
             </div>
-            <div class="inputs-label-div" style="padding-top: 4px;">
+            <div class="inputs-label-div">
               <label class="inputs-label" for="">واحد</label>
               <input id="unitInput" class="unit-input" type="number" max="4" min="0">
             </div>
@@ -289,7 +289,7 @@
               </svg>
               نام استاد
               <span class="inputs-label-star">*</span></label>
-            <input id="profossorName" type="text" maxlength="20">
+            <input id="profossorName" type="text" maxlength="">
           </div>
           <div class="inputs-label-div">
             <label class="inputs-label" for="">
@@ -342,6 +342,8 @@
               <line y1="1" x2="324" y2="1" stroke="#E2E8F0" stroke-width="2" />
             </svg>
             <button id="addTimeTagBtn" class="add-lessonTime-button">افزودن ساعت کلاس</button>
+            <span style="color: var(--wrong); display: none;" class="CAPTION dayTimeInterference">&#9679 در این ساعت
+              کلاس دیگری نیز دارید.</span>
           </div>
           <div class="inputs-label-div fillInputColor">
             <label class="inputs-label" for="">
@@ -363,11 +365,15 @@
               <input id="examTimeInput" class="exam-time-input" type="time">
               <input id="examDateInput" class="exam-date-input" type="date">
             </div>
+            <span style="color: var(--error); display: none;" class="CAPTION examDayInterference">&#9679 در این روز
+              امتحان دیگری نیز دارید.</span>
+            <span style="color: var(--wrong); display: none;" class="CAPTION examInterference">&#9679 در این روز و ساعت
+              امتحان دیگری نیز دارید.</span>
           </div>
         </div>
         <div class="add-clear-buttons">
           <svg xmlns="http://www.w3.org/2000/svg" width="382" height="3" viewBox="0 0 382 3" fill="none">
-            <rect width="382" height="3" fill="#475569" />
+            <rect id="progressBar" width="382" height="3" fill="var(--wrong)" />
           </svg>
           <div>
             <button class="disable-button clear-lesson-button" id="sidebarClearInputsBtn">
@@ -1112,3 +1118,4 @@
 </body>
 
 </html>
+
