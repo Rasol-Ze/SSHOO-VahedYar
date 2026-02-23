@@ -34,6 +34,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 72px;
     padding: 10px 32px;
     color: var(--good);
     border-bottom: 2px solid var(--white3);
@@ -132,12 +133,13 @@
 
 .modal-buttons-div {
     display: flex;
-    height: 100%;
+    /* height: 100%; */
+    margin-top: auto;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
     border-top: 2px solid var(--white3);
-    padding: 0px 24px;
+    padding: 20px 24px;
 
 }
 
@@ -161,7 +163,8 @@
     color: var(--white);
 }
 
-.modal-newLesson-button:hover svg, .modal-newLesson-button:hover svg path {
+.modal-newLesson-button:hover svg,
+.modal-newLesson-button:hover svg path {
     fill: var(--white);
     stroke: var(--action);
 
@@ -187,8 +190,128 @@
     color: var(--white);
 }
 
-.modal-editLesson-button:hover svg, .modal-editLesson-button:hover svg path {
+.modal-editLesson-button:hover svg,
+.modal-editLesson-button:hover svg path {
     fill: var(--white);
     stroke: var(--white);
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.warning-modalTitle-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 32px;
+    height: 72px;
+    color: var(--text2);
+    border-bottom: 2px solid var(--white3);
+}
+
+.warning-modalTitle-div:hover svg {
+    cursor: pointer;
+}
+
+
+.warning-modalDetail-div {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 24px;
+}
+
+.warningModal-checkMark-message-div {
+    display: flex;
+    color: var(--wrong);
+    gap: 10px;
+}
+
+#deleteLessonCheckMark+label {
+    cursor: pointer;
+}
+
+#deleteLessonCheckMark:checked+label svg path:nth-child(1) {
+    fill: var(--wrong);
+}
+
+
+.warning-modal-buttons-div {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 3px solid var(--wrong);
+    padding: 24px 24px;
+
+}
+
+.modal-deleteLesson-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wrong);
+    background-color: var(--white);
+    border: 2px solid var(--wrong);
+    padding: 10px 15px;
+    border-radius: 10px;
+    flex: 1;
+    gap: 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.modal-deleteLesson-button:hover {
+    background-color: var(--wrong);
+    color: var(--white);
+}
+
+.modal-deleteLesson-button:hover svg {
+    fill: var(--white);
+
+}
+
+.modal-deleteLesson-button:hover svg path:nth-child(2) {
+    stroke: var(--white);
+}
+
+.modal-deleteLesson-button:hover svg path:nth-child(1) {
+    stroke: var(--white);
+}
+
+.modal-deleteLesson-button:hover svg path:nth-child(3) {
+    stroke: var(--white);
+}
+
+.modal-cancel-button {
+    display: flex;
+    white-space: nowrap;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white);
+    border: 2px solid var(--text2);
+    color: var(--text2);
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.modal-cancel-button:hover {
+    color: var(--white);
+    background-color: var(--text2);
 }
