@@ -54,7 +54,8 @@ function addLesson(timeTagDiv, schedule) {
       date: examDate
     },
     timeTagDiv: [...timeTagDiv],
-    note: ''
+    note: '',
+    visibility: true
   };
 
   courseList.unshift(newCourse);
@@ -69,7 +70,6 @@ function addLesson(timeTagDiv, schedule) {
 function removelesson(id) {
   fillWarningModal(id)
   popUpModal();
-  console.log(warningModalBtn(id));
   warningModalBtn(id)
 
 
@@ -294,6 +294,128 @@ function fillWarningModal(id) {
 
 }
 
+function filldetailModal(id) {
+  const index = courseList.findIndex(course => course.lessonID === id);
+  const course = courseList[index];
+  const String = tagString(course);
+  document.querySelector('.modal-div').innerHTML = `    <div class="detail-modalTitle-div">
+      <h1 class="H1">جزئیات درس</h1>
+      <svg id='closeModal' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <g opacity="0.5">
+          <path d="M8 8L24 24" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M24 8L8 24" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+    </div>
+    <div class="modal-lessonDetails-div">
+      <div class="modal-lessonName-unit">
+        <h2 class="H2">${course.lessonName}</h2>
+        <span class="BODY">${course.unit} واحد</span>
+      </div>
+      <svg width="335" height="2" viewBox="0 0 335 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="335" y1="1" x2="-8.74228e-08" y2="0.999971" stroke="#E2E8F0" stroke-width="2" />
+      </svg>
+
+      <div class="modal-title-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <g opacity="0.5">
+            <path
+              d="M11.9425 13.385C14.5341 13.385 16.635 11.2841 16.635 8.6925C16.635 6.1009 14.5341 4 11.9425 4C9.3509 4 7.25 6.1009 7.25 8.6925C7.25 11.2841 9.3509 13.385 11.9425 13.385Z"
+              stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M5.53573 20.0002C5.42507 19.3631 5.47078 18.7029 5.47078 18.0594C5.47078 15.6342 7.43674 13.6683 9.86187 13.6683H14.1377C16.5629 13.6683 18.5288 15.6342 18.5288 18.0594C18.5288 18.7029 18.5745 19.3631 18.4639 20.0002"
+              stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+        <span class="BODY">${course.profossorName}</span>
+      </div>
+      <div class="modal-title-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <g opacity="0.5">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M14.3233 6.28561H9.67659C8.92742 6.28561 8.32031 5.67849 8.32031 4.92933V4.35627C8.32031 3.60711 8.92742 3 9.67659 3H14.3233C15.0725 3 15.6796 3.60711 15.6796 4.35627V4.92933C15.6796 5.67849 15.0725 6.28561 14.3233 6.28561Z"
+              stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M15.6803 4.59375C17.7536 4.59375 19.4348 6.27498 19.4348 8.34831V17.2458C19.4348 19.3191 17.7536 21.0004 15.6803 21.0004H8.32097C6.24764 21.0004 4.56641 19.3191 4.56641 17.2458V8.34831C4.56641 6.27498 6.24764 4.59375 8.32097 4.59375"
+              stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M15.0166 14.9481H8.98242M11.9995 10.9414H8.98242" stroke="#475569" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+        <span class="BODY">امتحان: ${course.exam.date} - ساعت ${course.exam.time}</span>
+      </div>
+      <div class="modal-classDay-tag">
+        <div class="modal-title-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <g opacity="0.5">
+              <path d="M3.70557 8.18091H20.2939" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M7.87646 5.68018H8.37646" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M15.623 5.68018H16.123" stroke="#475569" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M15.9053 3H8.10226C5.3953 3 3.70557 4.50741 3.70557 7.27813V16.6432C3.70557 19.4577 5.3953 21 8.10226 21H15.8973C18.6123 21 20.294 19.4846 20.294 16.7129V7.27813C20.302 4.50741 18.6202 3 15.9053 3Z"
+                stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M11.7207 16.9254L13.6886 11.5706H10.3114" stroke="#475569" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" />
+            </g>
+          </svg>
+          <span class="BODY">روزهای کلاس</span>
+        </div>
+        <div class="modal-time-tag-div" id="mainTimeTagDiv">
+          ${String}
+        </div>
+      </div>
+      <div class="modal-textareaFix">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <g opacity="0.5">
+            <path
+              d="M20.3917 9.27057C21.6527 8.06028 20.7182 6.73422 19.7838 5.76069C18.8494 4.78717 17.5629 3.79903 16.3018 5.00931L5.0908 16.184C4.70761 16.5518 4.48718 17.0574 4.47847 17.5884L4.43466 20.259C4.42868 20.6235 4.71772 20.9246 5.08216 20.9336L7.75228 20.9995C8.28324 21.0125 8.79744 20.813 9.18063 20.4453L20.3917 9.27057Z"
+              stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M18.2491 11.4133L14.0747 7.23889" stroke="#475569" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M6.15985 3V9.32618M9.32276 6.16315H2.99658" stroke="#475569" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" />
+          </g>
+        </svg>
+        <textarea maxlength="100" name="" id="" class="BODY modal-noteInput"
+          placeholder="نوشتن یادداشت...">${course.note}</textarea>
+      </div>
+    </div>
+    <div class="modal-add-delete-div">
+      <button class="H3 modal-deleteLesson-button" id="${course.lessonID}">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M18.9166 9.54688L18.3047 17.9235C18.1782 19.6562 16.7354 20.9988 14.9968 20.9988H9.00378C7.26619 20.9988 5.82241 19.6562 5.69594 17.9225L5.08398 9.54688"
+            stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M20.2649 6.40234H3.73535" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+          <path
+            d="M15.7714 6.40125L15.2684 3.92523C15.1225 3.37944 14.6273 3.00001 14.063 3.00001H9.9418C9.3746 2.99806 8.87745 3.37749 8.73054 3.92523L8.23242 6.40125"
+            stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M10.1016 11.7812V16.2896M13.482 11.7812V16.2896" stroke="var(--wrong)" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        حذف درس
+      </button>
+      <button class="H3 modal-editLesson-button">
+        <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M19.8584 19.8518H13.4814C13.0674 19.8518 12.7314 20.1878 12.7314 20.6018C12.7314 21.0158 13.0674 21.3518 13.4814 21.3518H19.8584C20.2724 21.3518 20.6084 21.0158 20.6084 20.6018C20.6084 20.1878 20.2724 19.8518 19.8584 19.8518Z"
+            fill="#475569" />
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M9.61666 8.84336C9.7161 8.7111 9.90386 8.68434 10.0363 8.78355L15.2163 12.664C15.349 12.7634 15.3759 12.9516 15.2763 13.0842L10.4566 19.504C9.29664 21.054 7.54664 21.364 6.33664 21.364C5.58664 21.364 5.04664 21.244 4.98664 21.234C4.85664 21.204 4.73664 21.114 4.66664 20.994C4.59664 20.864 2.87664 17.804 4.79664 15.254L9.61666 8.84336Z"
+            fill="#475569" />
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M17.2067 10.514L16.5367 11.4047C16.4373 11.5369 16.2495 11.5637 16.1171 11.4645L10.9363 7.58345C10.8039 7.48428 10.7768 7.29665 10.8757 7.16403L11.5467 6.26399C12.2367 5.33399 13.3067 4.84399 14.3867 4.84399C15.1267 4.84399 15.8667 5.07399 16.5067 5.55399C17.2567 6.12399 17.7467 6.95399 17.8867 7.88399C18.0167 8.82399 17.7767 9.75399 17.2067 10.514Z"
+            fill="#475569" />
+        </svg>
+        ویرایش درس
+      </button>
+    </div>`
+}
+
 function sumLesson(courseList) {
   document.querySelector('#sumLesson').textContent = `${courseList.length} درس`;
 }
@@ -353,10 +475,17 @@ function addToSidebar(course) {
               </div>
               <div style="display: flex; align-items: center; gap: 8px; white-space: nowrap;">
               <span class="BODY" style="color: var(--text2);">${course.unit} واحد</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M15.6813 9.2379C14.4468 6.56119 11.8863 4.89844 9.0003 4.89844C6.11357 4.89844 3.55308 6.56119 2.31933 9.2379C2.14533 9.6144 2.31033 10.0599 2.68608 10.2332C3.06333 10.4072 3.50808 10.2407 3.68133 9.86648C4.66758 7.72673 6.70533 6.39844 9.0003 6.39844C11.2946 6.39844 13.3323 7.72673 14.3193 9.86648C14.4461 10.141 14.7168 10.3022 15.0011 10.3022C15.1053 10.3022 15.2126 10.2805 15.3146 10.2332C15.6903 10.0599 15.8546 9.6144 15.6813 9.2379Z" fill="#475569" />
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.00234 8.12695C7.63284 8.12695 6.51831 9.23995 6.51831 10.6095C6.51831 11.9827 7.63284 13.0995 9.00234 13.0995C10.3726 13.0995 11.4871 11.9827 11.4871 10.6095C11.4871 9.23995 10.3726 8.12695 9.00234 8.12695Z" fill="#475569" />
-                </svg>
+<input id="hideLesson${course.lessonID}" type="checkbox" class="hideLesson" data-id="${course.lessonID}" ${course.visibility ? '' : 'checked'} hidden>
+<label class="hideLessonLabel" style="display: flex; cursor: pointer;" for="hideLesson${course.lessonID}">
+    <svg class="eyeicon${course.lessonID}" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M15.6813 9.2379C14.4468 6.56119 11.8863 4.89844 9.0003 4.89844C6.11357 4.89844 3.55308 6.56119 2.31933 9.2379C2.14533 9.6144 2.31033 10.0599 2.68608 10.2332C3.06333 10.4072 3.50808 10.2407 3.68133 9.86648C4.66758 7.72673 6.70533 6.39844 9.0003 6.39844C11.2946 6.39844 13.3323 7.72673 14.3193 9.86648C14.4461 10.141 14.7168 10.3022 15.0011 10.3022C15.1053 10.3022 15.2126 10.2805 15.3146 10.2332C15.6903 10.0599 15.8546 9.6144 15.6813 9.2379Z"
+            fill="#475569" />
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M9.00234 8.12695C7.63284 8.12695 6.51831 9.23995 6.51831 10.6095C6.51831 11.9827 7.63284 13.0995 9.00234 13.0995C10.3726 13.0995 11.4871 11.9827 11.4871 10.6095C11.4871 9.23995 10.3726 8.12695 9.00234 8.12695Z"
+            fill="#475569" />
+    </svg>
+</label>
               </div>
                 </div>
             <div class="lessonDetails-div">
@@ -393,15 +522,58 @@ function addToSidebar(course) {
               </div>
             </div>
           </div>`;
+
+  if (!course.visibility) {
+    document.querySelector(`.eyeicon${course.lessonID}`).innerHTML = `<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M17.1244 6.06269L15.7691 5.41919L15.4474 6.09644C14.4446 8.20692 12.8891 9.68142 11.0966 10.2979L10.9459 10.3414C10.3781 10.5199 9.79012 10.6212 9.18713 10.6212C6.61311 10.6204 4.27311 8.92917 2.92761 6.09644L2.60586 5.41919L1.25061 6.06269L1.57236 6.73994C2.02311 7.68794 2.57511 8.52417 3.20211 9.24267L1.54236 10.9039L2.60286 11.9637L4.27236 10.2934C4.94661 10.8514 5.68236 11.2887 6.46086 11.5962L5.81511 13.8184L7.25586 14.2369L7.90387 12.0057C8.32387 12.0799 8.75138 12.1212 9.18638 12.1212H9.18863C9.60413 12.1212 10.0129 12.0844 10.4141 12.0169L11.0591 14.2369L12.4991 13.8184L11.8601 11.6164C12.6461 11.3127 13.3901 10.8792 14.0711 10.3212L15.7129 11.9637L16.7741 10.9039L15.1451 9.27417C15.7841 8.54892 16.3451 7.70219 16.8026 6.73994L17.1244 6.06269Z" fill="#1E293B"/>
+</svg>`
+  }
 }
 
 function addToTable(course) {
-  course.schedule.forEach(element => {
-    const cell = findPlace(element.day, element.time);
-    if (cell) {
-      cell.innerHTML = `
+  if (course.visibility) {
+    course.schedule.forEach(element => {
+      const cell = findPlace(element.day, element.time);
+      if (cell) {
+        if (cell.children[0]?.classList.contains('used')) {
+          const index = courseList.findIndex(course => course.lessonID == cell.children[0].dataset.id)
+          cell.innerHTML = `<td class="table-dataCell">
+                            <div class="table-dataCel-mainDiv-dubbleLesson">
+                            <div class="unknown">
+                            <span class="lessonName-table dubble-hover H3">${course.lessonName} ${element.type}</span>
+                              <div class="table-dataCel-Dubble-hoverDiv used" data-id="${course.lessonID}">
+                                <button class="H3 viewButton-dubble-table">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11.998 19C15.703 19 19.092 16.3746 21 12C19.092 7.62539 15.703 5.00002 11.998 5.00002C8.297 5.00002 4.908 7.62539 3 12C4.908 16.3766 8.297 19 12.002 19H11.998Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.0787 12.0052C15.0787 13.6785 13.7007 15.0366 12.0027 15.0366C10.3037 15.0366 8.92566 13.6785 8.92566 12.0052C8.92566 10.3308 10.3037 8.97276 12.0027 8.97276C13.7007 8.97276 15.0787 10.3308 15.0787 12.0052Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                                  
+                                </button>
+                                <button class="H3 deleteButton-dubble-table" id="${element.day}-${element.time}" data-id="${course.lessonID}">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18.9166 9.54688L18.3047 17.9235C18.1782 19.6562 16.7354 20.9988 14.9968 20.9988H9.00378C7.26619 20.9988 5.82241 19.6562 5.69594 17.9225L5.08398 9.54688" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.2649 6.40234H3.73535" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.7714 6.40125L15.2684 3.92523C15.1225 3.37944 14.6273 3.00001 14.063 3.00001H9.9418C9.3746 2.99806 8.87745 3.37749 8.73054 3.92523L8.23242 6.40125" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.1016 11.7812V16.2896M13.482 11.7812V16.2896" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                  
+                                </button>
+                              </div>
+                            </div>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="152" height="2" viewBox="0 0 152 2" fill="none">
+                                <line y1="1" x2="152" y2="1" stroke="#E2E8F0" stroke-width="2" />
+                              </svg>
+                              <div class="unknown">
+                              <span class="lessonName-table dubble-hover H3">${courseList[index].lessonName} ${courseList[index].schedule.find(s => s.day == element.day && s.time == element.time).type}</span>
+                                  <div class="table-dataCel-Dubble-hoverDiv used" data-id="${courseList[index].lessonID}">
+                                <button class="H3 viewButton-dubble-table">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11.998 19C15.703 19 19.092 16.3746 21 12C19.092 7.62539 15.703 5.00002 11.998 5.00002C8.297 5.00002 4.908 7.62539 3 12C4.908 16.3766 8.297 19 12.002 19H11.998Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.0787 12.0052C15.0787 13.6785 13.7007 15.0366 12.0027 15.0366C10.3037 15.0366 8.92566 13.6785 8.92566 12.0052C8.92566 10.3308 10.3037 8.97276 12.0027 8.97276C13.7007 8.97276 15.0787 10.3308 15.0787 12.0052Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+              
+                                </button>
+                                <button class="H3 deleteButton-dubble-table" id="${element.day}-${element.time}" data-id="${courseList[index].lessonID}">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18.9166 9.54688L18.3047 17.9235C18.1782 19.6562 16.7354 20.9988 14.9968 20.9988H9.00378C7.26619 20.9988 5.82241 19.6562 5.69594 17.9225L5.08398 9.54688" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M20.2649 6.40234H3.73535" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15.7714 6.40125L15.2684 3.92523C15.1225 3.37944 14.6273 3.00001 14.063 3.00001H9.9418C9.3746 2.99806 8.87745 3.37749 8.73054 3.92523L8.23242 6.40125" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M10.1016 11.7812V16.2896M13.482 11.7812V16.2896" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                  
+                                </button>
+                              </div>
+                              </div>
+                            </div>
+                          </td>`
+        } else {
+          cell.innerHTML = `
               <td class="table-dataCell">
-                <div class="table-dataCel-hoverDiv">
+                <div class="table-dataCel-hoverDiv used" data-id="${course.lessonID}">
                   <button class="H3 viewButton-table">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M11.998 19C15.703 19 19.092 16.3746 21 12C19.092 7.62539 15.703 5.00002 11.998 5.00002C8.297 5.00002 4.908 7.62539 3 12C4.908 16.3766 8.297 19 12.002 19H11.998Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path fill-rule="evenodd" clip-rule="evenodd" d="M15.0787 12.0052C15.0787 13.6785 13.7007 15.0366 12.0027 15.0366C10.3037 15.0366 8.92566 13.6785 8.92566 12.0052C8.92566 10.3308 10.3037 8.97276 12.0027 8.97276C13.7007 8.97276 15.0787 10.3308 15.0787 12.0052Z" stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></svg>
                     مشاهده
@@ -415,9 +587,11 @@ function addToTable(course) {
                   <span class="lessonName-table H3">${course.lessonName} ${element.type}</span><span class="class-place-table BODY">مکان برگزاری</span>
                 </div>
               </td>`;
+        }
 
-    }
-  });
+      }
+    });
+  }
 }
 
 function tagString(course, flag = false) {
@@ -528,6 +702,7 @@ function removeclassTag(tag) {
 function modalAddNewLesson() {
   const addBtn = document.querySelector('#modalOpenAddlessonSidebarBtn');
   const editBtn = document.querySelector('.modal-editLesson-button')
+  const deleteBtn = document.querySelector('.modal-deleteLesson-button');
   if (addBtn) {
     addBtn.addEventListener('click', function () {
       const addLessonSidebar = document.querySelector('.add-lesson-container');
@@ -567,6 +742,17 @@ function modalAddNewLesson() {
       modalDiv.style.transform = 'scale(0.01)';
     })
   }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', function () {
+      const modalDiv = document.querySelector('.modal-div');
+      const modalBackground = document.querySelector('.modals-background');
+      modalBackground.style.opacity = '0';
+      modalBackground.style.pointerEvents = 'none';
+      modalDiv.style.transform = 'scale(0.01)';
+      removelesson(deleteBtn.id);
+    }
+    )}
 }
 
 
@@ -575,26 +761,32 @@ function warningModalBtn(id) {
   const cancelButton = document.querySelector('.modal-cancel-button');
 
   document.querySelector('#deleteLessonCheckMark').addEventListener('click', function () {
+    console.log('clicked')
     const checkMark = document.querySelector('#deleteLessonCheckMark');
+    console.log(checkMark.checked)
     if (checkMark.checked) {
       deleteButton.classList.remove('disable-button');
+      if (deleteButton) {
+        deleteButton.addEventListener('click', function () {
+          if (!deleteButton.classList.contains('disable-button')) {
+            const modalDiv = document.querySelector('.modal-div');
+            const modalBackground = document.querySelector('.modals-background');
+            modalBackground.style.opacity = '0';
+            modalBackground.style.pointerEvents = 'none';
+            modalDiv.style.transform = 'scale(0.01)';
+            courseList = courseList.filter(course => course.lessonID !== id);
+            updateCourses(courseList);
+          }
+
+        })
+      }
+
+
     } else {
       deleteButton.classList.add('disable-button');
     }
-
-    if (deleteButton && !deleteButton.classList.contains('disable-button')) {
-      deleteButton.addEventListener('click', function () {
-        const modalDiv = document.querySelector('.modal-div');
-        const modalBackground = document.querySelector('.modals-background');
-        modalBackground.style.opacity = '0';
-        modalBackground.style.pointerEvents = 'none';
-        modalDiv.style.transform = 'scale(0.01)';
-        courseList = courseList.filter(course => course.lessonID !== id);
-        updateCourses(courseList);
-      })
-    }
-
   })
+
 
 
   if (cancelButton) {
@@ -764,6 +956,13 @@ function resetProgressBar() {
 }
 
 
+function hideLesson(id, flag) {
+  const course = courseList.find(course => course.lessonID == id)
+  course.visibility = !flag;
+  updateCourses(courseList)
+}
+
+
 
 
 document.querySelectorAll('.fillInputColor input').forEach(input => {
@@ -862,6 +1061,16 @@ document.querySelector('#timeTagDiv').addEventListener('click', function (event)
   }
 });
 
+document.querySelector('.lessonList').addEventListener('change', function (event) {
+  const id = event.target.dataset.id;
+
+  if (event.target.checked) {
+    hideLesson(id, true)
+  } else {
+    hideLesson(id, false)
+  }
+});
+
 
 document.querySelector('.lessonList').addEventListener('click', function (event) {
   const deleteBtn = event.target.closest('.deleteLesson-button');
@@ -913,10 +1122,17 @@ document.addEventListener('input', function (event) {
 
 
 document.querySelector('tbody').addEventListener('click', function (event) {
-  const tableDeleteBtn = event.target.closest('.deleteButton-table');
+  const tableDeleteBtn = event.target.closest('.deleteButton-table') || event.target.closest('.deleteButton-dubble-table')
+  const tableviwewBtn = event.target.closest('.viewButton-table') || event.target.closest('.viewButton-dubble-table')
   if (tableDeleteBtn) {
     const [day, time] = tableDeleteBtn.id.split('-');
     const ID = tableDeleteBtn.dataset.id;
     removeclass(day, time, ID);
+  }
+
+  if (tableviwewBtn) {
+    const ID = tableviwewBtn.parentElement.dataset.id;
+    filldetailModal(ID);
+    popUpModal()
   }
 });
