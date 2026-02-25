@@ -209,7 +209,7 @@ function fillSuccessModal(course) {
         </div>
       </div>
       <div class="modal-buttons-div">
-        <button class="H3 modal-editLesson-button">
+        <button data-id=`${course.lessonID}` class="H3 modal-editLesson-button">
           <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path fill-rule="evenodd" clip-rule="evenodd"
               d="M19.8584 19.8518H13.4814C13.0674 19.8518 12.7314 20.1878 12.7314 20.6018C12.7314 21.0158 13.0674 21.3518 13.4814 21.3518H19.8584C20.2724 21.3518 20.6084 21.0158 20.6084 20.6018C20.6084 20.1878 20.2724 19.8518 19.8584 19.8518Z"
@@ -399,7 +399,7 @@ function filldetailModal(id) {
         </svg>
         حذف درس
       </button>
-      <button class="H3 modal-editLesson-button">
+      <button data-id=`${course.lessonID}` class="H3 modal-editLesson-button">
         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" clip-rule="evenodd"
             d="M19.8584 19.8518H13.4814C13.0674 19.8518 12.7314 20.1878 12.7314 20.6018C12.7314 21.0158 13.0674 21.3518 13.4814 21.3518H19.8584C20.2724 21.3518 20.6084 21.0158 20.6084 20.6018C20.6084 20.1878 20.2724 19.8518 19.8584 19.8518Z"
@@ -733,8 +733,8 @@ function modalAddNewLesson() {
 
   if (editBtn) {
     editBtn.addEventListener('click', function () {
-      tempID = courseList[0].lessonID
-      editLesson(courseList[0].lessonID)
+      tempID = editBtn.dataset.id
+      editLesson(editBtn.dataset.id)
       const modalDiv = document.querySelector('.modal-div');
       const modalBackground = document.querySelector('.modals-background');
       modalBackground.style.opacity = '0';
