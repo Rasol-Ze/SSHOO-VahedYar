@@ -315,3 +315,221 @@
     color: var(--white);
     background-color: var(--text2);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.detail-modal {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 382px;
+    height: 525px;
+    top: 10px;
+    border-radius: 15px;
+    border-bottom: 2px solid var(--white3);
+    border-right: 2px solid var(--white3);
+    border-left: 2px solid var(--white3);
+
+}
+
+.detail-modalTitle-div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 32px;
+    height: 72px;
+    color: var(--text1);
+    border-bottom: 2px solid var(--white3);
+}
+
+.detail-modalTitle-div:hover svg {
+    cursor: pointer;
+}
+
+
+
+.modal-lessonName-unit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-lessonName-unit h2 {
+    color: var(--text1);
+}
+
+.modal-lessonName-unit span {
+    color: var(--text2);
+}
+
+
+.modal-lessonDetails-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    transition: all 0.5s ease-in-out;
+    background-color: var(--white);
+    padding: 0px 24px;
+    margin-top: 32px;
+
+}
+
+
+.modal-title-icon {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    gap: 12px;
+    color: var(--text1);
+}
+
+.modal-textareaFix {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+    color: var(--text1);
+    height: 30px;
+
+}
+
+.modal-classDay-tag {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.modal-noteInput {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    border: none;
+    color: var(--text1);
+    outline: none;
+    width: 100%;
+    resize: none;
+    scroll-behavior: smooth;
+}
+
+.modal-noteInput::placeholder {
+    color: var(--text1);
+}
+
+.modal-add-delete-div {
+    display: flex;
+    margin-top: auto;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 3px solid var(--white3);
+    padding: 24px 24px;
+}
+
+.modal-deleteLesson-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--wrong);
+    background-color: var(--white);
+    border: 2px solid var(--wrong);
+    padding: 10px 15px;
+    border-radius: 10px;
+    flex: 1;
+    gap: 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.modal-deleteLesson-button:hover {
+    background-color: var(--wrong);
+    color: var(--white);
+}
+
+.modal-deleteLesson-button:hover svg {
+    fill: var(--white);
+
+}
+
+.modal-deleteLesson-button:hover svg path:nth-child(2) {
+    stroke: var(--white);
+}
+
+.modal-deleteLesson-button:hover svg path:nth-child(1) {
+    stroke: var(--white);
+}
+
+.modal-deleteLesson-button:hover svg path:nth-child(3) {
+    stroke: var(--white);
+}
+
+.modal-editLesson-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text2);
+    flex: 1;
+    background-color: var(--white);
+    border: 2px solid var(--text2);
+    padding: 10px 15px;
+    border-radius: 10px;
+    gap: 10px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.modal-editLesson-button:hover {
+    background-color: var(--text2);
+    color: var(--white);
+}
+
+.modal-editLesson-button:hover svg,
+.modal-editLesson-button:hover svg path {
+    fill: var(--white);
+    stroke: var(--white);
+
+}
+
+.modal-time-tag-div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.modal-time-tag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(71, 85, 105, 1);
+    gap: 5px;
+    padding: 6px 12px;
+    border: 1px solid rgba(71, 85, 105, 1);
+    border-radius: 6px;
+    cursor: default;
+}
+
+.modal-time-tag svg:hover {
+    cursor: pointer;
+}
+
+.modal-time-tag:hover {
+    background-color: rgba(226, 232, 240, 1);
+}
