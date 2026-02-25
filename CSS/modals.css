@@ -373,6 +373,7 @@
 
 .modal-lessonName-unit span {
     color: var(--text2);
+    white-space: nowrap;
 }
 
 
