@@ -1,0 +1,174 @@
+.examSchedule-div {
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.exam-header {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    right: 383px;
+    top: 110px;
+    height: 72px;
+    background-color: var(--white);
+    border-bottom: 2px solid var(--white3);
+    z-index: 10;
+}
+
+.exam-header-list {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 46px;
+    color: var(--text2);
+}
+
+
+
+.start-end-div {
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    width: 100%;
+    top: 200px;
+    align-items: center;
+    justify-content: center;
+}
+
+.end-start {
+    padding: 10px;
+    border: 2px solid var(--white3);
+    border-radius: 6px;
+}
+
+
+.exam-timeline-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 72px 0;
+}
+
+.exam-timeline-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 120px;
+    bottom: 100px;
+    left: 50%;
+    width: 2px;
+    background-color: var(--white3);
+    transform: translateX(-50%);
+    z-index: 0;
+}
+
+.timeline-badge {
+    background: var(--white2);
+    border: 2px solid var(--white3);
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: var(--text2);
+    font-weight: bold;
+    z-index: 1;
+    margin: 20px 0;
+}
+
+.timeline-row {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+}
+
+.timeline-half {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.timeline-right {
+    padding-right: 40px;
+}
+
+.timeline-left {
+    padding-left: 40px;
+
+}
+
+
+.timeline-right .exam-detail::before {
+    content: '';
+    position: absolute;
+    right: -41px;
+    top: 50%;
+    width: 40px;
+    height: 2px;
+    background: var(--white3);
+}
+
+.timeline-left .exam-detail::before {
+    content: '';
+    position: absolute;
+    left: -41px;
+    top: 50%;
+    width: 40px;
+    height: 2px;
+    background: var(--white3);
+}
+
+
+.exam-message {
+    padding: 0 100px;
+    direction: rtl;
+}
+
+
+.exam-detail {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    width: 330px;
+    border: 2px solid var(--white3);
+    border-radius: 16px;
+    padding: 18px 24px;
+    background-color: var(--white);
+    gap: 12px;
+    direction: rtl;
+}
+
+.exam-lessonName-unit {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.exam-lessonName-unit span {
+    white-space: nowrap;
+}
+
+.exam-timeDate {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.exam-time-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
