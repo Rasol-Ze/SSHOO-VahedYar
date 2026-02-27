@@ -10,7 +10,7 @@ function updateCourses(courseList) {
   document.querySelectorAll('td').forEach(td => { td.innerHTML = `` });
   const lessonList = document.querySelector('.lessonList');
 
-  if (courseList.lengt == 0) {
+  if (courseList.length == 0) {
     lessonList.classList.add('empty');
   }
 
@@ -1073,7 +1073,7 @@ function progressBar(input = null) {
       } else {
         i = 382
       }
-    } else if (input.value == '') {
+    } else if (input.value == '' && input.classList.contains('progressed')) {
       input.classList.remove('progressed')
       if (i <= 315) {
         i -= 63
@@ -1089,7 +1089,7 @@ function progressBar(input = null) {
       } else {
         i = 382
       }
-    } else if (daySelect.innerHTML.trim() == '') {
+    } else if (daySelect.innerHTML.trim() == '' && daySelect.classList.contains('progressed')) {
       daySelect.classList.remove('progressed')
       if (i <= 315) {
         i -= 63
@@ -1151,11 +1151,14 @@ document.querySelector('.nav-list').addEventListener('click', function (event) {
 
 document.querySelectorAll('.fillInputColor input').forEach(input => {
   input.addEventListener('input', function () {
+    console.log(input.value)
     checkFormValidity();
     progressBar(input)
     input.style.backgroundColor = input.value ? "var(--white3)" : "";
   });
 });
+
+
 
 
 document.querySelector('#resetAll').addEventListener('click', function () {
@@ -1330,4 +1333,3 @@ document.querySelector('tbody').addEventListener('click', function (event) {
     popUpModal()
   }
 });
-
