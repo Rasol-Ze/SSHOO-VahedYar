@@ -10,7 +10,7 @@ function updateCourses(courseList) {
   document.querySelectorAll('td').forEach(td => { td.innerHTML = `` });
   const lessonList = document.querySelector('.lessonList');
 
-  if (lessonList.children.length < 1) {
+  if (courseList.lengt == 0) {
     lessonList.classList.add('empty');
   }
 
@@ -1330,3 +1330,4 @@ document.querySelector('tbody').addEventListener('click', function (event) {
     popUpModal()
   }
 });
+
