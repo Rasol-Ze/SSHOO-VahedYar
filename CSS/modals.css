@@ -58,6 +58,10 @@
 
 }
 
+.modal-lessonUnit span {
+    white-space: nowrap;
+}
+
 .modal-title-icon {
     display: flex;
     justify-content: flex-start;
@@ -534,4 +538,3 @@
 .modal-time-tag:hover {
     background-color: rgba(226, 232, 240, 1);
 }
-
