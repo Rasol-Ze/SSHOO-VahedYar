@@ -26,7 +26,7 @@
     border-left: 2px solid var(--white3);
     background-color: var(--white);
     transform: scale(0.01);
-    transition: all 0.3s ease;
+    transition: all 0.5s cubic-bezier(0.4, 2, 0.6, 1);
 
 }
 
@@ -534,3 +534,4 @@
 .modal-time-tag:hover {
     background-color: rgba(226, 232, 240, 1);
 }
+
