@@ -1017,6 +1017,8 @@ function confirmEdit(id) {
   addLessonSidebar.style.visibility = "hidden";
 
   localStorage.setItem('courseList', JSON.stringify(courseList));
+  document.querySelector('#addTimeTagBtn').classList.remove('edit');
+
   updateCourses(courseList);
   renderExamTable(courseList)
   resetInputs();
@@ -1027,6 +1029,8 @@ function cancelEdit() {
   const addLessonSidebar = document.querySelector('.add-lesson-container');
   addLessonSidebar.style.transform = "translateX(390px)";
   addLessonSidebar.style.visibility = "hidden";
+  document.querySelector('#addTimeTagBtn').classList.remove('edit');
+
   resetInputs();
 }
 
