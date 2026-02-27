@@ -1,11 +1,7 @@
 let courseList = JSON.parse(localStorage.getItem('courseList')) || [];
-let examList = []
 let tempID = ``;
 let tempSchedule = [];
 let tempTimeTagDiv = [];
-let examCellTop = 77
-let examMessageTop = 214
-let count = 1
 updateCourses(courseList);
 console.log(courseList);
 
