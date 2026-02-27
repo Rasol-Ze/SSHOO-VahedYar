@@ -475,6 +475,18 @@ input:focus {
   color: var(--wrong);
 }
 
+.label-error-icon {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+
+}
+
+.label-error-icon svg {
+  display: none;
+}
+
 .day-check-div {
   display: flex;
   gap: 12px;
