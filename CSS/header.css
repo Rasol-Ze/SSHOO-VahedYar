@@ -53,6 +53,7 @@ header {
   color: var(--action);
   stroke: var(--action);
   pointer-events: none;
+  transition: all 0.3s ease;
 }
 
 .nav-list-item:hover {
