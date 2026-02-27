@@ -1,7 +1,11 @@
 let courseList = JSON.parse(localStorage.getItem('courseList')) || [];
+let examList = []
 let tempID = ``;
 let tempSchedule = [];
 let tempTimeTagDiv = [];
+let examCellTop = 77
+let examMessageTop = 214
+let count = 1
 updateCourses(courseList);
 console.log(courseList);
 
@@ -30,6 +34,8 @@ function updateCourses(courseList) {
     addToTable(course);
     addToSidebar(course);
   });
+
+  renderExamTable(courseList)
 
   sumUint(courseList);
   sumLesson(courseList);
@@ -78,7 +84,6 @@ function removelesson(id) {
 
 function removeclass(day, time, id) {
   const lessonIndex = courseList.findIndex(i => i.lessonID === id);
-  // console.log(courseList[lessonIndex].schedule.length - 1 == 0);
   if (courseList[lessonIndex].schedule.length - 1 == 0) {
     removelesson(id)
   } else {
@@ -443,6 +448,10 @@ function resetInputs() {
   document.querySelector('.examInterference').style.display = 'none'
   document.querySelector('.examDayInterference').style.display = 'none'
   document.querySelector('.dayTimeInterference').style.display = 'none'
+  document.querySelector('.tagAlreadyAdded').style.display = 'none'
+  document.querySelector('.timeErrorIcon').style.display = 'none'
+  document.querySelector('.examTimeErrorIcon').style.display = 'none'
+  document.querySelector('.examDayErrorIcon').style.display = 'none'
 
   tempID = ``;
   tempSchedule = [];
@@ -530,6 +539,7 @@ function addToSidebar(course) {
   }
 }
 
+
 function addToTable(course) {
   if (course.visibility) {
     course.schedule.forEach(element => {
@@ -594,6 +604,161 @@ function addToTable(course) {
   }
 }
 
+
+function jalaliToDays(dateStr) {
+  if (!dateStr) return 0;
+  const parts = dateStr.replace(/-/g, '/').split('/');
+  const y = parseInt(parts[0], 10);
+  const m = parseInt(parts[1], 10);
+  const d = parseInt(parts[2], 10);
+
+  let days = y * 365 + d;
+  for (let i = 1; i < m; i++) {
+    if (i <= 6) days += 31;
+    else if (i <= 11) days += 30;
+    else days += 29;
+  }
+  return days;
+}
+
+
+function renderExamTable(courseList) {
+  const examTable = document.querySelector('.exam-table');
+  const examHeader = document.querySelector('.exam-header');
+
+  const validExams = courseList.filter(course => course.exam && course.exam.date && course.visibility);
+
+  if (validExams.length === 0) {
+    if (examHeader) {
+      examHeader.innerHTML = `      <div class="exam-header">
+        <ul class="exam-header-list">
+          <li class="H3">تعداد امتحانات: 0</li>
+          <li class="H3">اولین امتحان: </li>
+          <li class="H3">آخرین امتحان: </li>
+          <li class="H3">طول بازه: 0</li>
+        </ul>
+      </div>`
+    }
+    if (examTable) examTable.innerHTML = `        <div class="start-end-div">
+          <span class="BODY end-start">شروع امتحانات</span>
+          <svg class="examline" width="2" height="100" viewBox="0 0 2 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 0L0.999973 100" stroke="#E2E8F0" stroke-width="2" />
+          </svg>
+          <span class="BODY end-start">پایان امتحانات</span>`;
+    return;
+  }
+
+  validExams.sort((a, b) => {
+    const dateA = a.exam.date.replace(/\//g, '') + (a.exam.time ? a.exam.time.replace(':', '') : '0000');
+    const dateB = b.exam.date.replace(/\//g, '') + (b.exam.time ? b.exam.time.replace(':', '') : '0000');
+    return dateA.localeCompare(dateB);
+  });
+
+  const firstExamDate = validExams[0].exam.date;
+  const lastExamDate = validExams[validExams.length - 1].exam.date;
+  const totalDays = (jalaliToDays(lastExamDate) - jalaliToDays(firstExamDate)) + 1;
+
+  if (examHeader) {
+    examHeader.innerHTML = `
+        <ul class="exam-header-list">
+          <li class="H3">تعداد امتحانات: ${validExams.length}</li>
+          <li class="H3">اولین امتحان: ${firstExamDate}</li>
+          <li class="H3">آخرین امتحان: ${lastExamDate}</li>
+          <li class="H3">طول بازه: ${totalDays} روز</li>
+        </ul>`;
+  }
+
+  let timelineHTML = `<div class="exam-timeline-wrapper">`;
+  timelineHTML += `<div class="timeline-badge BODY">شروع امتحانات</div>`;
+  let messageHTML = ``
+  validExams.forEach((course, index) => {
+    let warningMessage = "";
+    if (index > 0) {
+      const prevCourse = validExams[index - 1];
+      console.log(jalaliToDays(course.exam.date) - jalaliToDays(prevCourse.exam.date))
+      if (course.exam.date === prevCourse.exam.date) {
+        warningMessage = "در همان روز امتحان دیگری نیز دارید.";
+        messageHTML = `<span style="color: var(--wrong)" class="CAPTION exam-message">${warningMessage}</span>`;
+
+      } else if (jalaliToDays(course.exam.date) - jalaliToDays(prevCourse.exam.date) == 1) {
+        warningMessage = `تنها یک روز با امتحان قبلی فاصله دارید`;
+        messageHTML = `<span style="color: var(--error)" class="CAPTION exam-message">${warningMessage}</span>`;
+
+      } else {
+        const diff = jalaliToDays(course.exam.date) - jalaliToDays(prevCourse.exam.date);
+        warningMessage = `${diff} روز پس از امتحان قبلی`;
+        messageHTML = `<span style="color: var(--good)" class="CAPTION exam-message">${warningMessage}</span>`;
+      }
+    }
+
+    const isRight = index % 2 === 0 + 1;
+
+    const cardHTML = `
+        <div class="exam-detail">
+            <div class="exam-lessonName-unit">
+              <h3 class="H3">${course.lessonName}</h3>
+              <span class="BODY">${course.unit} واحد</span>
+            </div>
+            <div class="exam-timeDate">
+              <div class="exam-time-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g opacity="0.5">
+                  <path d="M3.98389 9.66223H20.0245" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M15.6404 3V5.96158" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M8.36792 3V5.96158" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M15.8138 4.42139H8.1939C5.55047 4.42139 3.90039 5.89439 3.90039 8.60009V16.7444C3.90039 19.4929 5.55047 21 8.1939 21H15.8061C18.4573 21 20.0996 19.5192 20.0996 16.8125V8.60009C20.1074 5.89439 18.4651 4.42139 15.8138 4.42139Z"
+                    stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M7.99023 14.9805H8.00023" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M12.0098 14.9805H12.0198" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M16.0195 14.9805H16.0295" stroke="#475569" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </g>
+              </svg>
+                <span class="BODY">${course.exam.date}</span>
+              </div>
+              <div class="exam-time-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g opacity="0.5">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M21.5 12C21.5 17.109 17.359 21.25 12.25 21.25C7.141 21.25 3 17.109 3 12C3 6.891 7.141 2.75 12.25 2.75C17.359 2.75 21.5 6.891 21.5 12Z" stroke="#475569" stroke-width="1.5" stroke-linecap="square" />
+                    <path d="M15.6821 14.9422L11.9121 12.6932V7.84619" stroke="#475569" stroke-width="1.5" stroke-linecap="square" />
+                  </g>
+                </svg>
+                <span class="BODY">ساعت: ${course.exam.time}</span>
+              </div>
+            </div>
+          </div>`;
+
+
+    timelineHTML += `
+      <div class="timeline-row">
+          <div class="timeline-half timeline-left" dir="ltr">
+              ${isRight ? messageHTML : cardHTML}
+          </div>
+          <div class="timeline-half timeline-right" dir="rtl">
+              ${isRight ? cardHTML : messageHTML}
+          </div>
+      </div>`;
+  });
+
+  timelineHTML += `<div class="timeline-badge BODY">پایان امتحانات</div>`;
+  timelineHTML += `</div>`;
+
+  if (examTable) examTable.innerHTML = timelineHTML;
+  examTable.children
+  examTable.children[0].children[examTable.children[0].children.length - 2].style.transform = 'scale(0.1)'
+  setTimeout(() => {
+    examTable.children[0].children[examTable.children[0].children.length - 2].style.transform = 'scale(1)'
+  }, 0);
+
+}
+
+
 function tagString(course, flag = false) {
   let tagString = ``;
   if (!flag) {
@@ -640,11 +805,14 @@ function addLessonSchedule() {
   if (!daySelected || !classTime) return;
 
   if (tempSchedule.some(schedule => (schedule.day == daySelected && schedule.time == classTime))) {
+    document.querySelector('.tagAlreadyAdded').style.display = 'flex'
     return
   }
+  document.querySelector('.tagAlreadyAdded').style.display = 'none'
 
   if (checkInterference(daySelected, classTime, null, null)) {
     document.querySelector('.dayTimeInterference').style.display = 'flex'
+    document.querySelector('.timeErrorIcon').style.display = 'flex'
   }
 
 
@@ -679,7 +847,7 @@ function addLessonSchedule() {
   document.querySelector(`.removeTime`).parentElement.style.transform = 'scale(0.1)';
   setTimeout(() => {
     document.querySelector(`.removeTime`).parentElement.style.transform = 'scale(1)';
-  }, 100);
+  }, 0);
 }
 
 function removeclassTag(tag) {
@@ -690,6 +858,7 @@ function removeclassTag(tag) {
 
   if (checkInterference(day, time, null, null)) {
     document.querySelector('.dayTimeInterference').style.display = 'none'
+    document.querySelector('.timeErrorIcon').style.display = 'none'
   }
   tag.parentElement.style.transform = 'scale(0.1)';
   setTimeout(() => {
@@ -752,7 +921,8 @@ function modalAddNewLesson() {
       modalDiv.style.transform = 'scale(0.01)';
       removelesson(deleteBtn.id);
     }
-    )}
+    )
+  }
 }
 
 
@@ -761,9 +931,7 @@ function warningModalBtn(id) {
   const cancelButton = document.querySelector('.modal-cancel-button');
 
   document.querySelector('#deleteLessonCheckMark').addEventListener('click', function () {
-    console.log('clicked')
     const checkMark = document.querySelector('#deleteLessonCheckMark');
-    console.log(checkMark.checked)
     if (checkMark.checked) {
       deleteButton.classList.remove('disable-button');
       if (deleteButton) {
@@ -854,6 +1022,7 @@ function confirmEdit(id) {
 
   localStorage.setItem('courseList', JSON.stringify(courseList));
   updateCourses(courseList);
+  renderExamTable(courseList)
   resetInputs();
 }
 
@@ -963,7 +1132,22 @@ function hideLesson(id, flag) {
 }
 
 
-
+document.querySelector('.nav-list').addEventListener('click', function (event) {
+  const examList = event.target.closest('#examList')
+  const lessonTable = event.target.closest('#lessonTable')
+  if (examList) {
+    document.querySelector('table').style.display = 'none'
+    document.querySelector('.examSchedule-div').style.display = 'unset'
+    document.querySelector('.navItam-active')?.classList.remove('navItam-active')
+    examList.classList.add('navItam-active')
+  }
+  if (lessonTable) {
+    document.querySelector('table').style.display = 'unset'
+    document.querySelector('.examSchedule-div').style.display = 'none'
+    document.querySelector('.navItam-active')?.classList.remove('navItam-active')
+    lessonTable.classList.add('navItam-active')
+  }
+})
 
 document.querySelectorAll('.fillInputColor input').forEach(input => {
   input.addEventListener('input', function () {
@@ -1047,9 +1231,11 @@ document.querySelector('.add-lesson-container').addEventListener('click', functi
 
 
 document.querySelector('#addTimeTagBtn').addEventListener('click', function () {
-  addLessonSchedule();
-  checkFormValidity();
-  progressBar()
+  if (document.querySelector('input[name="week"]:checked')) {
+    addLessonSchedule();
+    checkFormValidity();
+    progressBar()
+  }
 });
 
 
@@ -1110,15 +1296,23 @@ document.addEventListener('input', function (event) {
     if (checkInterference(null, null, examDate, examTime) == 1) {
       document.querySelector('.examInterference').style.display = 'none'
       document.querySelector('.examDayInterference').style.display = 'flex'
+      document.querySelector('.examTimeErrorIcon').style.display = 'none'
+      document.querySelector('.examDayErrorIcon').style.display = 'flex'
+
     } else if (checkInterference(null, null, examDate, examTime) == 2) {
       document.querySelector('.examDayInterference').style.display = 'none'
       document.querySelector('.examInterference').style.display = 'flex'
+      document.querySelector('.examTimeErrorIcon').style.display = 'flex'
+      document.querySelector('.examDayErrorIcon').style.display = 'none'
     } else {
       document.querySelector('.examInterference').style.display = 'none'
       document.querySelector('.examDayInterference').style.display = 'none'
+      document.querySelector('.examTimeErrorIcon').style.display = 'none'
+      document.querySelector('.examDayErrorIcon').style.display = 'none'
     }
   }
 });
+
 
 
 document.querySelector('tbody').addEventListener('click', function (event) {
