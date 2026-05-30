@@ -12,7 +12,7 @@
 	font-style: normal;
 	font-weight: 200;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-UltraLight.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-UltraLight.woff2') format('woff2');	
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-UltraLight.woff2') format('woff2');	
 }
 
 @font-face {
@@ -20,7 +20,7 @@
 	font-style: normal;
 	font-weight: 300;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Light.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-Light.woff2') format('woff2');		 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-Light.woff2') format('woff2');		 
 }
 
 @font-face {
@@ -28,7 +28,7 @@
 	font-style: normal;
 	font-weight: 500;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Medium.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-Medium.woff2') format('woff2');		 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-Medium.woff2') format('woff2');		 
 }
 
 @font-face {
@@ -36,7 +36,7 @@
 	font-style: normal;
 	font-weight: 600;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-DemiBold.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-DemiBold.woff2') format('woff2');	 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-DemiBold.woff2') format('woff2');	 
 }
 
 @font-face {
@@ -44,7 +44,7 @@
 	font-style: normal;
 	font-weight: 800;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-ExtraBold.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-ExtraBold.woff2') format('woff2');		 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-ExtraBold.woff2') format('woff2');		 
 }
 
 @font-face {
@@ -52,14 +52,14 @@
 	font-style: normal;
 	font-weight: 900;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Black.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-Black.woff2') format('woff2');		 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-Black.woff2') format('woff2');		 
 }
 @font-face {
 	font-family: IRANYekanX;
 	font-style: normal;
 	font-weight: 950;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-ExtraBlack.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-ExtraBlack.woff2') format('woff2');		 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-ExtraBlack.woff2') format('woff2');		 
 }
 
 @font-face {
@@ -67,7 +67,7 @@
 	font-style: normal;
 	font-weight: 1000;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Heavy.woff') format('woff'),   
-	url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff2/IRANYekanX-Heavy.woff2') format('woff2');		 
+	url('https://rasol-ze.github.io/SSHOO-VahedYar/font/font/woff2/IRANYekanX-Heavy.woff2') format('woff2');		 
 }
 
 @font-face {
@@ -75,7 +75,7 @@
 	font-style: normal;
 	font-weight: bold;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Bold.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-Bold.woff2') format('woff2');	 
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-Bold.woff2') format('woff2');	 
 }
 
 @font-face {
@@ -83,7 +83,7 @@
 	font-style: normal;
 	font-weight: normal;
 	src: url('https://rasol-ze.github.io/SSHOO-VahedYar/font/woff/IRANYekanX-Regular.woff') format('woff'),   
-	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/woff2/IRANYekanX-Regular.woff2') format('woff2');	
+	url('https://rasol-ze.github.io/font/SSHOO-VahedYar/font/woff2/IRANYekanX-Regular.woff2') format('woff2');	
 }
 
 
@@ -94,7 +94,7 @@
   /* Colors */
   --white: rgba(255, 255, 255, 1);
   --white2: rgba(248, 250, 252, 1);
-  --white3: rgba(226, 232, 240, 1);
+  --white3: rgba(210, 217, 227, 1);
   --text1: rgba(30, 41, 59, 1);
   --text2: rgba(71, 85, 105, 1);
   --action: rgba(37, 99, 235, 1);
@@ -113,6 +113,24 @@
   margin: 0;
   box-sizing: border-box;
   font-family: IRANYekanX;
+  font-style: normal;
+  -moz-font-feature-settings: "ss02";
+  -webkit-font-feature-settings: "ss02";
+  font-feature-settings: "ss02";
+}
+
+*::-webkit-scrollbar {
+  width: 3px;
+  margin-left: 1rem;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--text2);
+}
+
+
+*::-webkit-scrollbar-track {
+  background: var(--white3);
 }
 
 .H1 {
@@ -199,6 +217,7 @@ body {
   width: 100%;
   margin-top: 110px;
   margin-right: 383px;
+
 }
 
 .fullScreen {
@@ -263,11 +282,16 @@ body {
   }
 
   body {
-      background-color: var(--white);
+    background-color: var(--white);
   }
 
   .mobile-viwe {
     display: block;
+  }
+
+  .SSHOO {
+    transform: rotate(90deg);
+    right: 50%;
   }
 
 }
