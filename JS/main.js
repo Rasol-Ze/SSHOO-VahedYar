@@ -3,7 +3,7 @@ let tempID = ``;
 let tempSchedule = [];
 let tempTimeTagDiv = [];
 updateCourses(courseList);
-console.log(courseList);
+
 
 
 function updateCourses(courseList) {
@@ -36,6 +36,7 @@ function updateCourses(courseList) {
   sumUint(courseList);
   sumLesson(courseList);
   localStorage.setItem('courseList', JSON.stringify(courseList));
+  console.log(courseList);
 }
 
 function addLesson(timeTagDiv, schedule) {
@@ -253,7 +254,9 @@ function fillWarningModal(id) {
       <h2 class="H2">آیا مایلید که
         ${course.lessonName}
         را حذف کنید؟</h2>
-      <p class="BODY">&#9679 با حذف کلاس، میتوانید بعداً از طریق ویرایش درس، کلاس جدیدی برای این درس تعریف کنید.</p>
+      <ul style="padding-right: 1.5rem">
+      <li class="BODY">با حذف کلاس، میتوانید بعداً از طریق ویرایش درس، کلاس جدیدی برای این درس تعریف کنید.</li>
+      </ul>
       <div class="warningModal-checkMark-message-div">
         <input type="checkbox" id="deleteLessonCheckMark" name="deleteLessonCheckMark" hidden>
         <label for="deleteLessonCheckMark">
@@ -294,6 +297,64 @@ function fillWarningModal(id) {
 
 
 }
+
+function fillResetAllModal() {
+  document.querySelector('.modal-div').innerHTML = `
+    <div class="warning-modalTitle-div">
+      <h1 class="H1">هشدار</h1>
+      <svg id='closeModal' xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+        <g opacity="0.5">
+          <path d="M8 8L24 24" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M24 8L8 24" stroke="#475569" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </g>
+      </svg>
+    </div>
+    <div class="warning-modalDetail-div">
+      <h2 class="H2">آیا مایلید که تمامی دروس وارد شده را حذف کنید؟</h2>
+      <ul style="padding-right: 1.5rem">
+      <li class="BODY">تمام دروس و کلاس‌های وارد شده حذف خواهند شد.</li>
+      <li class="BODY">برنامه کلاسی هفتگی پاک خواهد شد.</li>
+      <li class="BODY">برنامه امتحانات ترم پاک خواهد شد.</li>
+      </ul>
+      <div class="warningModal-checkMark-message-div">
+        <input type="checkbox" id="resetAllCheckMark" name="resetAllCheckMark" hidden>
+        <label for="resetAllCheckMark">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M13.5015 9H10.499C9.6706 9 8.99902 9.67157 8.99902 10.5V13.5025C8.99902 14.3309 9.6706 15.0025 10.499 15.0025H13.5015C14.33 15.0025 15.0015 14.3309 15.0015 13.5025V10.5C15.0015 9.67157 14.33 9 13.5015 9Z"
+              fill="" />
+            <path
+              d="M7.78216 3H16.2169C19.165 3 21 5.08119 21 8.02638V15.9736C21 18.9188 19.165 21 16.2159 21H7.78216C4.83405 21 3 18.9188 3 15.9736V8.02638C3 5.08119 4.84281 3 7.78216 3Z"
+              stroke="#475569" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </label>
+
+        <span class="H3">از تصمیم خود برای پاک‌سازی مطمئنم.</span>
+      </div>
+    </div>
+    <div class="warning-modal-buttons-div">
+      <button class="H3 modal-cancel-button" id="cancel-resetAll">
+        انصراف
+      </button>
+      <button class="H3 modal-resetAll-button disable-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path
+            d="M18.9166 9.54688L18.3047 17.9235C18.1782 19.6562 16.7354 20.9988 14.9968 20.9988H9.00378C7.26619 20.9988 5.82241 19.6562 5.69594 17.9225L5.08398 9.54688"
+            stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M20.2649 6.40234H3.73535" stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round"></path>
+          <path
+            d="M15.7714 6.40125L15.2684 3.92523C15.1225 3.37944 14.6273 3.00001 14.063 3.00001H9.9418C9.3746 2.99806 8.87745 3.37749 8.73054 3.92523L8.23242 6.40125"
+            stroke="var(--wrong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          <path d="M10.1016 11.7812V16.2896M13.482 11.7812V16.2896" stroke="var(--wrong)" stroke-width="1.5"
+            stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        پاک کردن
+      </button>
+    </div>`
+
+}
+
 
 function filldetailModal(id) {
   const index = courseList.findIndex(course => course.lessonID === id);
@@ -650,8 +711,8 @@ function renderExamTable(courseList) {
     return dateA.localeCompare(dateB);
   });
 
-  const firstExamDate = validExams[0].exam.date;
-  const lastExamDate = validExams[validExams.length - 1].exam.date;
+  const firstExamDate = validExams[0].exam.date.replace(/-/g, '/');
+  const lastExamDate = validExams[validExams.length - 1].exam.date.replace(/-/g, '/');
   const totalDays = (jalaliToDays(lastExamDate) - jalaliToDays(firstExamDate)) + 1;
 
   if (examHeader) {
@@ -671,7 +732,7 @@ function renderExamTable(courseList) {
     let warningMessage = "";
     if (index > 0) {
       const prevCourse = validExams[index - 1];
-      console.log(jalaliToDays(course.exam.date) - jalaliToDays(prevCourse.exam.date))
+
       if (course.exam.date === prevCourse.exam.date) {
         warningMessage = "در همان روز امتحان دیگری نیز دارید.";
         messageHTML = `<span style="color: var(--wrong)" class="CAPTION exam-message">${warningMessage}</span>`;
@@ -716,7 +777,7 @@ function renderExamTable(courseList) {
                     stroke-linejoin="round" />
                 </g>
               </svg>
-                <span class="BODY">${course.exam.date}</span>
+                <span class="BODY">${course.exam.date.replace(/-/g, '/')}</span>
               </div>
               <div class="exam-time-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -910,29 +971,33 @@ function modalAddNewLesson() {
 
   if (deleteBtn) {
     deleteBtn.addEventListener('click', function () {
-      const modalDiv = document.querySelector('.modal-div');
-      const modalBackground = document.querySelector('.modals-background');
-      modalBackground.style.opacity = '0';
-      modalBackground.style.pointerEvents = 'none';
-      modalDiv.style.transform = 'scale(0.01)';
-      removelesson(deleteBtn.id);
+      if (!deleteBtn.classList.contains('disable-button')) {
+        const modalDiv = document.querySelector('.modal-div');
+        const modalBackground = document.querySelector('.modals-background');
+        modalBackground.style.opacity = '0';
+        modalBackground.style.pointerEvents = 'none';
+        modalDiv.style.transform = 'scale(0.01)';
+        removelesson(deleteBtn.id);
+      }
     }
     )
   }
 }
 
 
-function warningModalBtn(id) {
+function warningModalBtn(id = null) {
   const deleteButton = document.querySelector('.modal-deleteLesson-button');
   const cancelButton = document.querySelector('.modal-cancel-button');
+  const resetAllButton = document.querySelector('.modal-resetAll-button')
 
-  document.querySelector('#deleteLessonCheckMark').addEventListener('click', function () {
+  document.querySelector('#deleteLessonCheckMark')?.addEventListener('click', function () {
     const checkMark = document.querySelector('#deleteLessonCheckMark');
     if (checkMark.checked) {
       deleteButton.classList.remove('disable-button');
       if (deleteButton) {
         deleteButton.addEventListener('click', function () {
           if (!deleteButton.classList.contains('disable-button')) {
+            showLoading()
             const modalDiv = document.querySelector('.modal-div');
             const modalBackground = document.querySelector('.modals-background');
             modalBackground.style.opacity = '0';
@@ -944,7 +1009,6 @@ function warningModalBtn(id) {
 
         })
       }
-
 
     } else {
       deleteButton.classList.add('disable-button');
@@ -962,6 +1026,36 @@ function warningModalBtn(id) {
       modalDiv.style.transform = 'scale(0.01)';
     })
   }
+
+  document.querySelector('#resetAllCheckMark')?.addEventListener('click', function () {
+    const resetCheckMark = document.querySelector('#resetAllCheckMark');
+    if (resetCheckMark.checked) {
+      resetAllButton.classList.remove('disable-button')
+      if (resetAllButton) {
+        resetAllButton.addEventListener('click', function () {
+          if (!resetAllButton.classList.contains('disable-button')) {
+            showLoading()
+            const modalDiv = document.querySelector('.modal-div');
+            const modalBackground = document.querySelector('.modals-background');
+            modalBackground.style.opacity = '0';
+            modalBackground.style.pointerEvents = 'none';
+            modalDiv.style.transform = 'scale(0.01)';
+            localStorage.removeItem('courseList');
+            courseList = [];
+            document.querySelector('.lessonList').classList.add('empty');
+            resetInputs();
+            const addLessonSidebar = document.querySelector('.add-lesson-container');
+            addLessonSidebar.style.transform = "translateX(390px)";
+            addLessonSidebar.style.visibility = "hidden";
+            updateCourses(courseList);
+          }
+        })
+      }
+    } else {
+      resetAllButton.classList.add('disable-button');
+    }
+  })
+
 }
 
 
@@ -1131,27 +1225,44 @@ function hideLesson(id, flag) {
   updateCourses(courseList)
 }
 
+function showLoading() {
+  const loading = document.querySelector('.loading')
+  loading.style.opacity = '1'
+  loading.style.transform = 'scale(1)'
+  loading.style.display = 'flex'
+  setTimeout(() => {
+    loading.style.opacity = '0'
+    loading.style.transform = 'scale(10)'
+    setTimeout(() => {
+      loading.style.display = 'none'
+    }, 500);
+  }, 1000);
+}
+
 
 document.querySelector('.nav-list').addEventListener('click', function (event) {
   const examList = event.target.closest('#examList')
   const lessonTable = event.target.closest('#lessonTable')
   if (examList) {
+    showLoading()
     document.querySelector('table').style.display = 'none'
-    document.querySelector('.examSchedule-div').style.display = 'unset'
+    document.querySelector('.examSchedule-div').style.display = 'block'
     document.querySelector('.navItam-active')?.classList.remove('navItam-active')
     examList.classList.add('navItam-active')
   }
   if (lessonTable) {
-    document.querySelector('table').style.display = 'unset'
+    showLoading()
     document.querySelector('.examSchedule-div').style.display = 'none'
+    document.querySelector('table').style.display = 'table'
     document.querySelector('.navItam-active')?.classList.remove('navItam-active')
     lessonTable.classList.add('navItam-active')
   }
 })
 
+
 document.querySelectorAll('.fillInputColor input').forEach(input => {
   input.addEventListener('input', function () {
-    console.log(input.value)
+
     checkFormValidity();
     progressBar(input)
     input.style.backgroundColor = input.value ? "var(--white3)" : "";
@@ -1160,16 +1271,12 @@ document.querySelectorAll('.fillInputColor input').forEach(input => {
 
 
 
-
 document.querySelector('#resetAll').addEventListener('click', function () {
-  localStorage.removeItem('courseList');
-  courseList = [];
-  document.querySelector('.lessonList').classList.add('empty');
-  resetInputs();
-  const addLessonSidebar = document.querySelector('.add-lesson-container');
-  addLessonSidebar.style.transform = "translateX(390px)";
-  addLessonSidebar.style.visibility = "hidden";
-  updateCourses(courseList);
+  popUpModal()
+  fillResetAllModal()
+  closePopUp()
+  warningModalBtn()
+
 });
 
 
@@ -1250,6 +1357,7 @@ document.querySelector('#timeTagDiv').addEventListener('click', function (event)
   }
 });
 
+
 document.querySelector('.lessonList').addEventListener('change', function (event) {
   const id = event.target.dataset.id;
 
@@ -1315,7 +1423,6 @@ document.addEventListener('input', function (event) {
     }
   }
 });
-
 
 
 document.querySelector('tbody').addEventListener('click', function (event) {
