@@ -1,0 +1,84 @@
+.loading {
+  display: flex;
+  position: fixed;
+  z-index: 99;
+  background-color: var(--white2);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  column-gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  display: none;
+}
+
+.ppp {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  height: 100px;
+  gap: 0.1rem;
+  
+
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  background-color: var(--action);
+  animation: ani 1s infinite;
+}
+
+.column {
+  width: 20px;
+  height: 70px;
+  border-radius: 10px;
+  background-color: var(--text2);
+  animation: ani1 1s infinite;
+}
+
+
+
+.loading div:nth-child(1) .circle {
+  animation-delay: -0.2s;
+}
+
+.loading div:nth-child(2) .circle {
+  animation-delay: 0.15s;
+}
+
+.loading div:nth-child(3) .circle {
+  animation-delay: 0.4s;
+}
+
+.loading div:nth-child(2) .column {
+  animation-delay: 0.25s;
+}
+
+.loading div:nth-child(3) .column {
+  animation-delay: 0.5s;
+}
+
+@keyframes ani {
+  20% {
+    transform: translateY(-20px);
+
+  }
+}
+
+@keyframes ani1 {
+  80% {
+    height: 10px;
+  }
+}
+
+@keyframes ano {
+  50% {
+    flex-direction: row;
+  }
+
+}
